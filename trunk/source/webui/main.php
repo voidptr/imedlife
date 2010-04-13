@@ -13,6 +13,7 @@
 	<div id="banner">  </div>
 	
 	<!-- #BeginEditable "Login" -->
+	<?php //if($_SESSION['loggedin'] != true) { //Show login form if the user has not logged in?>
 	<div id="login">
 		<form action="login.php">
 			Username: <input type="text" name="username" />
@@ -20,6 +21,9 @@
 			<input type="submit" name="login" value="Login"/>
 		</form>
 	</div>
+	<div id="create"> <a href="#"> Create Account </a></div>
+
+	<?php // } ?>
 	<!-- #EndEditable -->
 	
 	<div id="menu">
