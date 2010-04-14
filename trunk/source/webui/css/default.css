@@ -65,9 +65,50 @@ body {
 
 #content {
 	position: static;
+	height: auto;
 	margin-left: 100px;
 	margin-right: 100px;
+	margin-bottom: 0px;
 	padding: 20px;
-	background-color: #FFFFFF;
-	border: 1px solid black;
+	text-align: center;
+	background-image: url("../images/maintop.png");
+	background-repeat: repeat-x;
+	background-color: white;
+	border-left: 1px solid black;
+	border-right: 1px solid black;
+
 }
+p.main {
+	 width: 75%;
+	 margin-left: auto;
+	 margin-right: auto;
+	 text-align: left;
+	 text-indent: 2.5em;
+	 padding-top: 5px;
+}
+
+p.notice {
+	color:#FF0000;
+	font-weight: bold;
+}
+
+#footer {
+	position: static;
+	height: auto;
+	margin-left: 100px;
+	margin-right: 100px;
+	padding: 10px;
+	background-image: url("../images/footer.png");
+	background-repeat: repeat-x;
+	border-left: 1px solid black;
+	border-right: 1px solid black;
+	text-align: center;
+	font-weight: bold;
+	color: white;
+}
+
+#footer a {
+	text-decoration: none;
+	color: #66FF66;
+}
+

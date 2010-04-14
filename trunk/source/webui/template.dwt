@@ -11,8 +11,7 @@
 <body>
 	<div id="banner">  </div>
 	
-	<!-- #BeginEditable "Login" -->
-	<?php //if($_SESSION['loggedin'] != true) { //Show login form if the user has not logged in?>
+	<?php if (!isset($_SESSION['loggedIn']) || $_SESSION['loggedIn'] != true) { //Show login form if the user has not logged in ?>
 	<div id="login">
 		<form action="login.php">
 			Username: <input type="text" name="username" />
@@ -22,8 +21,7 @@
 	</div>
 	<div id="create"> <a href="#"> Create Account </a></div>
 
-	<?php // } ?>
-	<!-- #EndEditable -->
+	<?php  } ?>
 	
 	<div id="menu">
 		<ul>
@@ -35,6 +33,7 @@
 	</div>
 	
 	<div id="content"> <!-- #BeginEditable "MainContent" -->Content <!-- #EndEditable --> </div>
+	<div id="footer"> Copyright &copy; 2010 | CSE 870 iMedLife Design Group - <a href="http://www.msu.edu" target="_blank">Mighigan State University</a></div>
 </body>
 
 </html>
