@@ -11,7 +11,7 @@
 
 <body>
 	<div id="banner">  </div>
-	
+	<div id="logo"> <a href="http://www.cse.msu.edu/~burksarm/imedlife/webui/main.php"><img src="images/logo.png"/></a></div>
 	<?php if (!isset($_SESSION['loggedIn']) || $_SESSION['loggedIn'] != true) { //Show login form if the user has not logged in ?>
 	<div id="login">
 		<form action="login.php">
@@ -43,7 +43,9 @@
 						but with the additional capability of being able to access their medical records from any computer, anywhere!
 						Doctors may view and edit patient information from the web interfice as well. </p>
 						
-		<p class="notice"> Please Login or Create Account above to access your medical records.</p>
+		<?php if (!isset($_SESSION['loggedIn']) || $_SESSION['loggedIn'] != true) //display message if not logged in
+		echo "<p class=\"notice\"> Please Login or Create Account above to access your medical records!</p>";
+		?>
 											
 		<!-- #EndEditable --> </div>
 	<div id="footer"> Copyright &copy; 2010 | CSE 870 iMedLife Design Group - <a href="http://www.msu.edu" target="_blank">Mighigan State University</a></div>

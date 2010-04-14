@@ -15,6 +15,18 @@ body {
 	background-repeat: repeat-x;
 }
 
+#logo {
+	position: absolute;
+	width: 200px;
+	height: 120px;
+	top: 40px;
+	left: 200px;
+}
+
+#logo a, img {
+	text-decoration: none;
+	border: none;
+}
 #login {
 	position: absolute;
 	top: 50px;
@@ -35,7 +47,7 @@ body {
 }
 
 #create a {
-	color: #66FF66;
+	color: #FFFF00;
 }
 #menu {
 	position: static;
@@ -88,8 +100,12 @@ p.main {
 }
 
 p.notice {
-	color:#FF0000;
-	font-weight: bold;
+	margin-top: 20px;
+	margin-left: 200px;
+	color:#FF5050;
+	background-color: #FFFF99;
+	border: 1px dashed #FF5050;
+	width: 50%;	
 }
 
 #footer {

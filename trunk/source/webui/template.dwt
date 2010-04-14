@@ -10,7 +10,7 @@
 
 <body>
 	<div id="banner">  </div>
-	
+	<div id="logo"> <a href="http://www.cse.msu.edu/~burksarm/imedlife/webui/main.php"><img src="images/logo.png"/></a></div>
 	<?php if (!isset($_SESSION['loggedIn']) || $_SESSION['loggedIn'] != true) { //Show login form if the user has not logged in ?>
 	<div id="login">
 		<form action="login.php">
