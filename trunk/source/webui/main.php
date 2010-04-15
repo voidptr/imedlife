@@ -4,6 +4,7 @@
 <head>
 <meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
 <link rel="stylesheet" type="text/css" href="css/default.css"/>
+<link rel="shortcut icon" href="images/favicon.ico" />
 <!-- #BeginEditable "doctitle" -->
 <title>iMedLife Web Interface | Main</title>
 <!-- #EndEditable -->
