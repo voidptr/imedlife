@@ -6,21 +6,27 @@ body {
 	background-color: #333333;
 }
 #banner {
-	position: static;
+	position: relative;
+	min-width: 750px;
 	margin: 0 100px 0 100px;
 	height: 100px;
 	border: 1px solid #000000;
 	border-bottom: none;
 	background-image: url("../images/banner.png");
 	background-repeat: repeat-x;
+	color: #FFFFFF;
+	text-align: right;
+	padding-right: 50px;
+}
+
+#banner a {
+	color: #FFFF00;
 }
 
 #logo {
-	position: absolute;
-	width: 200px;
-	height: 120px;
-	top: 40px;
-	left: 200px;
+	float: left;
+	margin-left: 60px;
+	margin-right: 20px;
 }
 
 #logo a, img {
@@ -28,31 +34,15 @@ body {
 	border: none;
 }
 #login {
-	position: absolute;
-	top: 50px;
-	right: 100px;
-	width: 500px;
-	height: 50px;
-	padding-left: 5px;
-	font-size: small;
-	font-weight:bold;
-	color: #EEEEEE;
+	margin-top: 40px;
 
 }
-#create {
-	position: absolute;
-	top: 80px;
-	right: 120px;
-	text-align: right;
-}
 
-#create a {
-	color: #FFFF00;
-}
 #menu {
 	position: static;
 	height: 30px;
 	margin: 0 100px 0 100px;
+	min-width: 800px;
 	background-image: url("../images/menu.png");
 	background-repeat: repeat-x;
 	padding: 0;
@@ -81,6 +71,7 @@ body {
 	margin-left: 100px;
 	margin-right: 100px;
 	margin-bottom: 0px;
+	min-width: 760px;
 	padding: 20px;
 	text-align: center;
 	background-image: url("../images/maintop.png");
@@ -102,10 +93,16 @@ p.main {
 p.notice {
 	margin-top: 20px;
 	margin-left: 200px;
-	color:#FF5050;
+	padding: 10px 0px 20px 5px;
+	text-align:left;
+	font-weight: bold;
+	color:#FF0000;
 	background-color: #FFFF99;
 	border: 1px dashed #FF5050;
 	width: 50%;	
+}
+p.notice img {
+	float: left;
 }
 
 #footer {
@@ -113,6 +110,7 @@ p.notice {
 	height: auto;
 	margin-left: 100px;
 	margin-right: 100px;
+	min-width: 780px;
 	padding: 10px;
 	background-image: url("../images/footer.png");
 	background-repeat: repeat-x;

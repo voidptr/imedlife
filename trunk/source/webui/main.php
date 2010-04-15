@@ -10,20 +10,20 @@
 </head>
 
 <body>
-	<div id="banner">  </div>
-	<div id="logo"> <a href="http://www.cse.msu.edu/~burksarm/imedlife/webui/main.php"><img src="images/logo.png"/></a></div>
-	<?php if (!isset($_SESSION['loggedIn']) || $_SESSION['loggedIn'] != true) { //Show login form if the user has not logged in ?>
-	<div id="login">
-		<form action="login.php">
-			Username: <input type="text" name="username" />
-			Password: <input type="password" name="password" />
-			<input type="submit" name="login" value="Login"/>
+	<div id="banner">  
+		<p>
+			<a href="http://www.cse.msu.edu/~burksarm/imedlife/webui/main.php"><img id="logo" src="images/logo.png" alt="iMedLife"/></a></p>
+		<?php if (!isset($_SESSION['loggedIn']) || $_SESSION['loggedIn'] == false) { ?>
+		<form id="login" action="../server/lib/login.php">
+			Username: <input name="username" type="text"/>
+			Password: <input name="password" type="password"/>
+					  <input name="login" type="submit" value="Login"/>
+					  
 		</form>
+		<a href="../server/lib/create.php"> Create Account </a>
+		<?php } ?>
+		
 	</div>
-	<div id="create"> <a href="#"> Create Account </a></div>
-
-	<?php  } ?>
-	
 	<div id="menu">
 		<ul>
 			<li> <a href="main.php"> Main </a></li>
@@ -44,7 +44,8 @@
 						Doctors may view and edit patient information from the web interfice as well. </p>
 						
 		<?php if (!isset($_SESSION['loggedIn']) || $_SESSION['loggedIn'] != true) //display message if not logged in
-		echo "<p class=\"notice\"> Please Login or Create Account above to access your medical records!</p>";
+		echo "<p class=\"notice\"> Please Login or Create Account above to access your medical records!";
+		echo "<img src=\"images/notice.png\" alt=\"!\"/></p>";
 		?>
 											
 		<!-- #EndEditable --> </div>
