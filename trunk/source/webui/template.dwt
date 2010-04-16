@@ -28,7 +28,7 @@
 	<div id="menu">
 		<ul>
 			<li> <a href="main.php"> Main </a></li>
-			<li> <a href="#"> Patient Info </a></li>
+			<li> <a href="patientinfo.php"> Patient Info </a></li>
 			<li> <a href="#"> Medical Info </a></li>
 			<li> <a href="#"> Help </a> </li>
 		</ul>

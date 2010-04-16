@@ -1,3 +1,6 @@
+<?php
+session_start();
+?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <!-- #BeginTemplate "template.dwt" -->
@@ -28,7 +31,7 @@
 	<div id="menu">
 		<ul>
 			<li> <a href="main.php"> Main </a></li>
-			<li> <a href="#"> Patient Info </a></li>
+			<li> <a href="patientinfo.php"> Patient Info </a></li>
 			<li> <a href="#"> Medical Info </a></li>
 			<li> <a href="#"> Help </a> </li>
 		</ul>
@@ -36,7 +39,7 @@
 	
 	<div id="content"> <!-- #BeginEditable "MainContent" -->
 		<h1> Welcome</h1>
-		<p class="main"> iMedLife &trade; is an iPhone application that serves as a personal medical record, PMR, for the owner. 
+		<p class="main"> iMedLife is an iPhone application that serves as a personal medical record, PMR, for the owner. 
 						Users can view their medical records, images, etc. directly from the iPhone. Users also have the capability of 
 						updating and uploading information to the server, all within the iPhone app! </p>
 						
