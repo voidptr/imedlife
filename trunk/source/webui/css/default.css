@@ -79,8 +79,29 @@ body {
 	background-color: white;
 	border-left: 1px solid black;
 	border-right: 1px solid black;
+}
+
+.forms {
+	margin: 0px auto 10px auto;
+	padding: 10px;
+	text-align: left;
+	background-color: #CFDBF3;
+	border: 1px solid #CCCCCC;
+}
+#content form input {
+	margin: 5px;
 
 }
+
+#content form h3 {
+	text-decoration: underline;
+}
+
+.options {
+	margin-top: 20px;
+	background-color: #FFFFFF;
+}
+
 p.main {
 	 width: 75%;
 	 margin-left: auto;
@@ -125,4 +146,3 @@ p.notice img {
 	text-decoration: none;
 	color: #66FF66;
 }
-
