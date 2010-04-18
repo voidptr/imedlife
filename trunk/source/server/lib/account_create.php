@@ -1,5 +1,5 @@
 <?php 
-//create.php - Creates a new patient or doctor account in the database
+//account_create.php - Creates a new patient or doctor account in the database
 
 include_once("connect.php"); //establish the initial connection to the database
 
@@ -22,7 +22,7 @@ if (isset($_POST['createType']) && $_POST['createType'] == "patient") {
 	else if (strlen($password) < 6 || $password != $passwordConfirm) //don't proceed if password is not correct
 		echo "Please use your browser's back button and check that your password is valid and that the passoword matches.";
 	
-	//Should also make sure none of the fields are too long before we try to create account to avoid overflow errors
+	//TODO Should also make sure none of the fields are too long before we try to create account to avoid overflow errors
 	
 	else {//If all the fields are entered and valid, proceed	
 		//Now verify that this patient has a record in the medicalRecords table
