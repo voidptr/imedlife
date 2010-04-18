@@ -26,7 +26,7 @@
 	</div>
 	
 	<div id="content"> <!-- #BeginEditable "MainContent" -->
-		<form class="forms" method="post" action="../server/lib/create.php">	
+		<form class="forms" method="post" action="../server/lib/account_create.php">	
 		<h3> Create a new Web Client Account</h3><br/>
 			<p> Account Type: <b>Patient</b> <input type="radio" name="createType" value="patient"/>
 			<b>Doctor</b> <input type="radio" name="createType" value="doctor"/></p>
