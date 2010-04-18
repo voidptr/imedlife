@@ -25,7 +25,7 @@ session_start();
 					  <input name="login" type="submit" value="Login"/>
 					  
 		</form>
-		<a href="../server/lib/create.php"> Create Account </a>
+		<a href="create.php"> Create Account </a>
 		<?php } ?>
 		
 	</div>
