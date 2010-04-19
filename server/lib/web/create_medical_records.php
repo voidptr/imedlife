@@ -1,6 +1,6 @@
 <?php
 //medical_records.php - Responds to a request to create a new medical record
-include_once("connect.php"); //establish initial connection to database
+include_once("lib/connect.php"); //establish initial connection to database
 //Validate the data we got before we try to insert it into the database
 		$firstName = $_POST['firstName'];
 		$middleName = $_POST['middleName'];
