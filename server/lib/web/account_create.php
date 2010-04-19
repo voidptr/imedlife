@@ -44,7 +44,7 @@ if (isset($_POST['createType']) && $_POST['createType'] == "patient") {
 	
 				//If we successfully created the user, return them back to the main.php page so they can Login
 				if ($result) 
-					header("location: ../../webui/main.php");
+					header("location: ../../../webui/main.php");
 				else
 					echo "Error. Could not create account.";
 			}
