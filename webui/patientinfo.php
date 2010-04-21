@@ -57,6 +57,7 @@
 			<?php
 				if (isset($_POST['request']) && $_POST['request'] == "create") { ?>
 					<form class="forms" method="post" action="../server/process.php">
+						<h3> Medical Records</h3>
 						<b>First Name:</b> <input type="text" name="firstName" />
 						<b>Middle Name:</b> <input type="text" name="middleName" />
 						<b>Last Name:</b> <input type="text" name="lastName" /><br/>
@@ -74,6 +75,10 @@
 						<b>Emergency Name:</b> <input type="text" name="emergencyName" /><br/>
 						<b>Emergency Number:</b> (ex. 8885553256 no dashes) <input type="text" name="emergencyNumber" />
 						<b>Emergency Address:</b> <input type="text" name="emergencyAddress" />
+						
+						<h3> Medical Histories </h3>
+						<!-- ADD FIELDS TO CREATE MEDICAL HISTORIES HERE -->
+						
 						<input type="hidden" name="request" value="create" /><br/>
 						<input type="submit" value="Create Record" />
 					</form>
@@ -83,7 +88,7 @@
 					$result = mysql_query("SHOW COLUMNS FROM medicalRecords"); //get all the fields from the medicalRecords table
 					if (mysql_num_rows($result) > 0) {
 						echo "<form class=\"forms\" method=\"post\" action=\"../server/process.php\">";
-						echo "<h3> Medical Record </h3>";
+						echo "<h3> View Medical Record </h3>";
 						$i = 0; //just used for the display
 					    	while ($row = mysql_fetch_array($result)) {
 					    		if ($row[0] != "patientID") {
@@ -91,7 +96,7 @@
 					    			if (($i%3) ==0) echo "<br/>";
 					    		}
 					    		$i++;
-					    	}					    	echo "<br/> <input name = \"request\" type=\"submit\" value=\"Create Record\" />";
+					    	}					    	
 					    	echo "</form>";
 					    	mysql_free_result($result);
 					}

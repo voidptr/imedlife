@@ -25,6 +25,9 @@ if (isset($_GET['request'])) { //If we get a GET requestType, we know it's from 
 		case "approveDoc":
 			include("lib/iphone/approve.php");
 			break;
+		case "createAccount":
+			include("lib/iphone/account_create.php");
+			break;
 		case "uploadInfo":
 			include("lib/iphone/upload.php");
 			break;
