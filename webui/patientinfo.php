@@ -76,9 +76,9 @@
 						<b>Emergency Number:</b> (ex. 8885553256 no dashes) <input type="text" name="emergencyNumber" />
 						<b>Emergency Address:</b> <input type="text" name="emergencyAddress" />
 			<!-- Wah -->	
-						<h3> Medical Histories </h3>
 						<!-- ADD FIELDS TO CREATE MEDICAL HISTORIES HERE -->
-                        <b>Patient ID:</b> <input type="text" name="patientID" />
+                        <h3> Medical Histories </h3>
+						<b>Patient ID:</b> <input type="text" name="patientID" />
 						<b>Medical Conditions:</b> <input type="text" name="medicalConditions" />
 						<b>Medications:</b> <input type="text" name="medications" /><br/>
 						<b>Procedures:</b> <input type="text" name="procedures" />
@@ -94,7 +94,7 @@
                         <!-- ADD FIELDS TO CREATE useruploads HERE -->
                     	<h3> User Uploads </h3>
 						<b>Patient ID:</b> <input type="text" name="patientID" />
-						<b>Note date:</b> <input type="text" name="notedate" />
+						<b>Note date:</b> (yyyymmdd no slashes, dashes, or spaces) <input type="text" name="notedate" />
 						<b>Note:</b> <input type="text" name="note" /><br/>
 						<b>Image:</b> <input type="text" name="image" />
                         <b>Voice:</b> <input type="text" name="voice" />
@@ -104,6 +104,8 @@
                         <b>Patient ID:</b> <input type="text" name="patientID" />
 						<b>Insurance Company:</b> <input type="text" name="insuranceCompany" />
 						<b>Policy Number:</b> <input type="text" name="policyNumber" /><br/>
+                        
+                        
 						
 			            
                         
