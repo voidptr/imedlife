@@ -90,10 +90,25 @@
 						<b>Name:</b> <input type="text" name="name" />
 						<b>Healthcare Phone Number:</b> (ex. 8885553256 no dashes)<input type="text" name="hthcarphoneNumber" /><br/>
 						<b>Referred By:</b> <input type="text" name="referredBy" />
-                        
+            <!-- Wah -->            
                         <!-- ADD FIELDS TO CREATE useruploads HERE -->
                     	<h3> User Uploads </h3>
+						<b>Patient ID:</b> <input type="text" name="patientID" />
+						<b>Note date:</b> <input type="text" name="notedate" />
+						<b>Note:</b> <input type="text" name="note" /><br/>
+						<b>Image:</b> <input type="text" name="image" />
+                        <b>Voice:</b> <input type="text" name="voice" />
+            <!-- Wah -->            
+                        <!-- ADD FIELDS TO CREATE Insurance Info HERE -->
+                    	<h3> Insurance Company Information </h3>
+                        <b>Patient ID:</b> <input type="text" name="patientID" />
+						<b>Insurance Company:</b> <input type="text" name="insuranceCompany" />
+						<b>Policy Number:</b> <input type="text" name="policyNumber" /><br/>
 						
+			            
+                        
+
+
                         
 						<input type="hidden" name="request" value="create" /><br/>
 						<input type="submit" value="Create Record" />
