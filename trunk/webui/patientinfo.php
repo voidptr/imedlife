@@ -75,10 +75,26 @@
 						<b>Emergency Name:</b> <input type="text" name="emergencyName" /><br/>
 						<b>Emergency Number:</b> (ex. 8885553256 no dashes) <input type="text" name="emergencyNumber" />
 						<b>Emergency Address:</b> <input type="text" name="emergencyAddress" />
-						
+			<!-- Wah -->	
 						<h3> Medical Histories </h3>
 						<!-- ADD FIELDS TO CREATE MEDICAL HISTORIES HERE -->
+                        <b>Patient ID:</b> <input type="text" name="patientID" />
+						<b>Medical Conditions:</b> <input type="text" name="medicalConditions" />
+						<b>Medications:</b> <input type="text" name="medications" /><br/>
+						<b>Procedures:</b> <input type="text" name="procedures" />
+						<b>Visit Date:</b> (yyyymmdd no slashes, dashes, or spaces) <input type="text" name="visitDate" /><br/>
+			<!-- Wah -->
+						<!-- ADD FIELDS TO CREATE Healthcare Providers HERE -->
+                    	<h3> Healthcare Providers </h3>
+					    <b>Patient ID:</b> <input type="text" name="patientID" />
+						<b>Name:</b> <input type="text" name="name" />
+						<b>Healthcare Phone Number:</b> (ex. 8885553256 no dashes)<input type="text" name="hthcarphoneNumber" /><br/>
+						<b>Referred By:</b> <input type="text" name="referredBy" />
+                        
+                        <!-- ADD FIELDS TO CREATE useruploads HERE -->
+                    	<h3> User Uploads </h3>
 						
+                        
 						<input type="hidden" name="request" value="create" /><br/>
 						<input type="submit" value="Create Record" />
 					</form>
