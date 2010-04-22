@@ -105,18 +105,11 @@
 						<b>Insurance Company:</b> <input type="text" name="insuranceCompany" />
 						<b>Policy Number:</b> <input type="text" name="policyNumber" /><br/>
                         
-                        
-						
-			            
-                        
-
-
-                        
-						<input type="hidden" name="request" value="create" /><br/>
+            			<input type="hidden" name="request" value="create" /><br/>
 						<input type="submit" value="Create Record" />
 					</form>
 				<?php }
-			
+			//Wah View Section
 				if (isset($_POST['request']) && $_POST['request'] == "view") {
 					$result = mysql_query("SHOW COLUMNS FROM medicalRecords"); //get all the fields from the medicalRecords table
 					if (mysql_num_rows($result) > 0) {
@@ -125,7 +118,8 @@
 						$i = 0; //just used for the display
 					    	while ($row = mysql_fetch_array($result)) {
 					    		if ($row[0] != "patientID") {
-					    			echo "<b>$row[0]:</b>" ."<input name=\"$i\" type=\"text\"/>"; //the fields will just be indexed instead of hard-coding the names
+					    		 //the fields will just be indexed instead of hard-coding the names
+					    			echo "<b>$row[0]:</b>" ."<input name=\"$i\" type=\"text\"/>"; 
 					    			if (($i%3) ==0) echo "<br/>";
 					    		}
 					    		$i++;
