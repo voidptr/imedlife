@@ -95,11 +95,12 @@ body {
 
 #content form h3 {
 	text-decoration: underline;
+	margin-top: 30px;
 }
 
 .options {
 	margin-top: 20px;
-	background-color: #FFFFFF;
+	background-color: #000000;
 }
 
 p.main {
@@ -145,4 +146,11 @@ p.notice img {
 #footer a {
 	text-decoration: none;
 	color: #66FF66;
+}
+
+#banner a.logout {
+	text-decoration: none;
+	text-transform: uppercase;
+	font-weight: bold;
+	color: #FFFFFF;
 }

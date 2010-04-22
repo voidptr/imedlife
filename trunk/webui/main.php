@@ -18,27 +18,27 @@ session_start();
 		<p>
 			<a href="http://www.cse.msu.edu/~burksarm/imedlife/webui/main.php"><img id="logo" src="images/logo.png" alt="iMedLife"/></a></p>
 		<?php if (!isset($_SESSION['loggedIn']) || $_SESSION['loggedIn'] == false) { ?>
-		<form id="login" action="../server/lib/login.php">
+		<form id="login" method="post" action="../server/lib/web/login.php">
 			Username: <input name="username" type="text"/>
 			Password: <input name="password" type="password"/>
 					  <input name="login" type="submit" value="Login"/>
 					  
 		</form>
 		<a href="create.php"> Create Account </a>
-		<?php } ?>
+		<?php } 
+		else if (isset($_SESSION['loggedIn']))
+			echo "<a class=\"logout\" href=\"../server/lib/web/logout.php\"> Logout </a>";?>
 		
 	</div>
 	<div id="menu">
 		<ul>
 			<li> <a href="main.php"> Main </a></li>
 			<li> <a href="patientinfo.php"> Patient Info </a></li>
-			<li> <a href="#"> Medical Info </a></li>
-			<li> <a href="#"> Help </a> </li>
 		</ul>
 	</div>
 	
 	<div id="content"> <!-- #BeginEditable "MainContent" -->
-		<h1> Welcome</h1>
+		<h1> 	Welcome</h1>
 		<p class="main"> iMedLife is an iPhone application that serves as a personal medical record, PMR, for the owner. 
 						Users can view their medical records, images, etc. directly from the iPhone. Users also have the capability of 
 						updating and uploading information to the server, all within the iPhone app! </p>
@@ -47,9 +47,11 @@ session_start();
 						but with the additional capability of being able to access their medical records from any computer, anywhere!
 						Doctors may view and edit patient information from the web interfice as well. </p>
 						
-		<?php if (!isset($_SESSION['loggedIn']) || $_SESSION['loggedIn'] != true) //display message if not logged in
-		echo "<p class=\"notice\"> Please Login or Create Account above to access your medical records!";
-		echo "<img src=\"images/notice.png\" alt=\"!\"/></p>";
+		<?php //display message if not logged in
+			if (!isset($_SESSION['loggedIn']) || $_SESSION['loggedIn'] != true) {
+				echo "<p class=\"notice\"> Please Login or Create Account above to access your medical records!";
+				echo "<img src=\"images/notice.png\" alt=\"!\"/></p>";
+			}
 		?>
 											
 		<!-- #EndEditable --> </div>
