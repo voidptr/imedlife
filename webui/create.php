@@ -32,7 +32,7 @@
 			<b>Doctor</b> <input type="radio" name="createType" value="doctor"/></p>
 			Username: <input type="text" name="username"/><br/>
 			Password (at least 6 characters): <input type="password" name="password" />
-			Confirm Password: <input type="password" name="passwordConfirm"><br/><br/>
+			Confirm Password: <input type="password" name="passwordConfirm"/><br/><br/>
 			First Name: <input type="text" name="firstName" />
 			Middle Name: <input type="text" name="middleName" />
 			Last Name :<input type="text" name="lastName" /><br/>
