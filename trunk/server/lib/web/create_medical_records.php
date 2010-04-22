@@ -128,6 +128,42 @@ include_once("lib/connect.php"); //establish initial connection to database
 		}
 
 
+//Wah
+//Validate User Upload data we got before we try to insert it into the database
+
+		$patientID = $_POST['patientID'];
+		$notedate = $_POST['notedate'];
+        //this is a different phone numeber from patient one, it is healthcare' number
+		$note = $_POST['note'];
+		$image = $_POST['image'];
+		$voice = $_POST['voice'];
+        
+		$errors = ""; //will keep a collection the fields that have errors in them
+	
+    //Check the date format
+		if (!strstr($notedate, "-") == false || !strstr($notedate, "/") == false || !strstr($notedate, " ") == false || strlen($notedate) != 8)
+			$errors .= ",$notedate";
+                    
+		//TODO: REMOVE OR DISALLOW THE USE OF CHARACTERS THAT MUST BE ESCAPED, SUCH AS SINGLE QUOTES IN THE HEIGHT, ETC.
+		if ( strlen($errors) < 1) {			
+			//Now insert the data if it all looks correct
+			$query = "INSERT INTO useruploads(patientID, noteDate, note, image, voice) VALUES ('$patientID', '$noteDate', '$note', '$image', '$voice')";
+
+			$result = mysql_query($query);
+
+			if ($result) //redirect back to the patientinfo page if all is well
+				header("location: ../webui/patientinfo.php");
+			else echo "ERROR, Could not create record in database.";
+		}
+		//Display the errors the user has and force the user to fix them before continuing
+		else { 
+			$error = explode(",", $errors);
+			echo "<b>ERROR in processing the following field(s):</b> <br/>";
+			for ($i=0; $i<= count($error); $i++)
+				echo "<i>$error[$i] </i><br/>";
+			echo "<b>Please use your browser's back button and correct this problem.</b>";
+		}
+
 
 
 
