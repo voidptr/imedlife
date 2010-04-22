@@ -104,6 +104,7 @@
 			
 		//Wah View Section
 			if (isset($_POST['option']) && $_POST['option'] == "view") {
+/*************************************************************************************************************
 				$result = mysql_query("SHOW COLUMNS FROM medicalRecords"); //get all the fields from the medicalRecords table
 				if (mysql_num_rows($result) > 0) {
 					echo "<form class=\"forms\" method=\"post\" action=\"../server/process.php\">";
@@ -118,6 +119,7 @@
 				    echo "</form>";
 				    mysql_free_result($result); //release the resource
 				}
+***************************************************************************************************/
 			}	
 		}?>
 											
