@@ -88,6 +88,12 @@ body {
 	background-color: #CFDBF3;
 	border: 1px solid #CCCCCC;
 }
+.viewtable {
+	width: auto;
+	background-color:#CFDBF3;
+	padding: 20px;
+	overflow: scroll;
+}
 #content form input {
 	margin: 5px;
 

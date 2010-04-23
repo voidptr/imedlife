@@ -114,22 +114,7 @@
 			
 		//Wah View Section
 			if (isset($_POST['option']) && $_POST['option'] == "view") {
-/*************************************************************************************************************
-				$result = mysql_query("SHOW COLUMNS FROM medicalRecords"); //get all the fields from the medicalRecords table
-				if (mysql_num_rows($result) > 0) {
-					echo "<form class=\"forms\" method=\"post\" action=\"../server/process.php\">";
-					echo "<h3> View Medical Record </h3>";
-					
-					$i = 0; //just used for the display so we don't show too many text boxes on one line
-			    	while ($row = mysql_fetch_array($result)) { //read every field name from the table
-			    		echo "<b>$row[0]:</b>" ."<input name=\"$i\" disabled=\"disabled\" type=\"text\"/>"; 
-			    			if (($i%3) ==0) echo "<br/>"; //only show three fields per row
-			    		$i++;
-			    	}					    	
-				    echo "</form>";
-				    mysql_free_result($result); //release the resource
-				}
-***************************************************************************************************/
+				include("../server/lib/web/view_medical_records.php");
 			}	
 		}?>
 											
