@@ -58,11 +58,12 @@
                 <br/>
                 <?php //Show the buttons for viewing specific information
                 	if(isset($_POST['option']) && $_POST['option'] == "view") { ?>
-		                <input type="submit" value="Medical Record"/>
-		                <input type="submit" value="Medical History"/>
-		                <input type="submit" value="Healthcare Providers"/>
-		                <input type="submit" value="Insurance Company Information"/>
-		         <?php } ?>
+		                
+                        <input type="submit" name="MedicalRecord" value="Medical Record"/>
+		                <input type="submit" name="MedicalHistory" value="Medical History"/>
+		                <input type="submit" name="HealthcareProviders" value="Healthcare Providers"/>
+		                <input type="submit" name="InsuranceCompanyInformation" value="Insurance Company Information"/>
+		         <?php include("../server/lib/web/view_medical_records.php");} ?>
                 
 			</form>
 			
@@ -114,9 +115,9 @@
 			<?php } //END  Create Option
 			
 		//Wah View Section
-			if (isset($_POST['option']) && $_POST['option'] == "view") {
-				include("../server/lib/web/view_medical_records.php");
-			}	
+			//if (isset($_POST['option']) && $_POST['option'] == "view") {
+			//	include("../server/lib/web/view_medical_records.php");
+		//	}	
 		}?>
 											
 		<!-- #EndEditable --> </div>
