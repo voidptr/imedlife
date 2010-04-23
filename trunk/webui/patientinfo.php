@@ -55,10 +55,13 @@
                 
 				<input type="submit" value="Go"/>
                 <br/>
-                <input type="submit" value="Medical Record"/>
-                <input type="submit" value="Medical History"/>
-                <input type="submit" value="Healthcare Providers"/>
-                <input type="submit" value="Insurance Company Information"/>
+                <?php //Show the buttons for viewing specific information
+                	if(isset($_POST['option']) && $_POST['option'] == "view") { ?>
+		                <input type="submit" value="Medical Record"/>
+		                <input type="submit" value="Medical History"/>
+		                <input type="submit" value="Healthcare Providers"/>
+		                <input type="submit" value="Insurance Company Information"/>
+		         <?php } ?>
                 
 			</form>
 			

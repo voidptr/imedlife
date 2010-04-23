@@ -47,8 +47,14 @@ if (isset($_GET['request'])) { //If we get a GET requestType, we know it's from 
 else if (isset($_POST['request'])) {
 	//Now figure out what the web client is requesting
 	$request = $_POST['request'];
-	if ($request == "create") { //Request to create a new medical record
-		include("lib/web/create_medical_records.php");
+	
+	switch ($request) {
+		case "create": //Request to create a new medical record
+			include("lib/web/create_medical_records.php");
+			break;
+		case "upload":
+			include("lib/web/upload.php");
+			break;
 	}
 }
 ?>
