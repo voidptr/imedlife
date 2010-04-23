@@ -7,6 +7,12 @@ if (isset($_GET['request'])) { //If we get a GET requestType, we know it's from 
 	$request = $_GET['request'];
 	
 	switch($request) { //Depending on the request, perform the following actions
+		case "login":
+			include("lib/iphone/login.php");
+			break;
+		case "logout":
+			include("lib/iphone/logout.php");
+			break;
 		case "retrieveMedRec":
 			include("lib/iphone/display_medical_record.php");
 			break;
