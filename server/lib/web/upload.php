@@ -28,8 +28,8 @@ function upload(){
 		    }    
 	    }
     	else { // if the file is >= than the maximum allowed, don't proceed
-	     echo "File exceeds the Maximum File limit<br/>";
-	     echo "Maximum File limit is $maxsize bytes.<br/>";
+	     echo "File exceeds the Maximum File size limit<br/>";
+	     echo "Maximum File limit is 8 MB.<br/>";
      	}
 
 	}
