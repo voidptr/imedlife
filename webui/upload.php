@@ -37,21 +37,13 @@
 	</div>
 	
 	<div id="content"> <!-- #BeginEditable "MainContent" -->   
-	     
+	     <?php if(isset($_SESSION['uploaded'])) { echo "<p class=\"uploadsuccess\">File Uploaded Successfully.</p>"; } ?>
 		<h3>Please Choose a File and Upload Type and click Submit</h3>
-		<div class="uploads">
         <form enctype="multipart/form-data" action="../server/lib/web/upload.php" method="post">
-            <input type="hidden" name="MAX_FILE_SIZE" value="10000000" />
-            File: <input name="userFile[]" type="file" /><br/>
-            Upload Type: <select name="uploadType">
-            	<option>Select Type</option>
-            	<option>image</option>
-            	<option>voice</option>
-            	<option>text</option>
-            </select>
-            <input type="submit" value="Submit" />
+            <input type="hidden" name="MAX_FILE_SIZE" value="8388608" />
+            File: <input name="userFile[]" type="file" />
+            <input type="submit" value="Upload" />
         </form>
-        </div>
     </body>
 </html> <!-- #EndEditable --> </div>
 	<div id="footer"> Copyright &copy; 2010 | CSE 870 iMedLife Design Group - <a href="http://www.msu.edu" target="_blank">Mighigan State University</a></div>
