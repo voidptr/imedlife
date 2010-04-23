@@ -160,3 +160,11 @@ p.notice img {
 	font-weight: bold;
 	color: #FFFFFF;
 }
+.uploads {
+	margin-left: auto;
+	margin-right: auto;
+	width: 400px;
+}
+.uploads form {
+	text-align:right;
+}	

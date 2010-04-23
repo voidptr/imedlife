@@ -1,6 +1,4 @@
-<?php
-session_start();
-?>
+<?php session_start(); ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <!-- #BeginTemplate "template.dwt" -->
@@ -9,7 +7,7 @@ session_start();
 <link rel="stylesheet" type="text/css" href="css/default.css"/>
 <link rel="shortcut icon" href="images/favicon.ico" />
 <!-- #BeginEditable "doctitle" -->
-<title>iMedLife Web Interface | Main</title>
+<title>imedLife Web Interface | Upload</title>
 <!-- #EndEditable -->
 </head>
 
@@ -38,24 +36,24 @@ session_start();
 		</ul>
 	</div>
 	
-	<div id="content"> <!-- #BeginEditable "MainContent" -->
-		<h1> 	Welcome</h1>
-		<p class="main"> iMedLife is an iPhone application that serves as a personal medical record, PMR, for the owner. 
-						Users can view their medical records, images, etc. directly from the iPhone. Users also have the capability of 
-						updating and uploading information to the server, all within the iPhone app! </p>
-						
-		<p class="main"> You have reached the web interface to the server. web users have all the capabilities that iPhone users have,
-						but with the additional capability of being able to access their medical records from any computer, anywhere!
-						Doctors may view and edit patient information from the web interfice as well. </p>
-						
-		<?php //display message if not logged in
-			if (!isset($_SESSION['loggedIn']) || $_SESSION['loggedIn'] != true) {
-				echo "<p class=\"notice\"> Please Login or Create Account above to access your medical records!";
-				echo "<img src=\"images/notice.png\" alt=\"!\"/></p>";
-			}
-		?>
-											
-		<!-- #EndEditable --> </div>
+	<div id="content"> <!-- #BeginEditable "MainContent" -->   
+	     
+		<h3>Please Choose a File and Upload Type and click Submit</h3>
+		<div class="uploads">
+        <form enctype="multipart/form-data" action="../server/lib/web/upload.php" method="post">
+            <input type="hidden" name="MAX_FILE_SIZE" value="10000000" />
+            File: <input name="userFile[]" type="file" /><br/>
+            Upload Type: <select name="uploadType">
+            	<option>Select Type</option>
+            	<option>image</option>
+            	<option>voice</option>
+            	<option>text</option>
+            </select>
+            <input type="submit" value="Submit" />
+        </form>
+        </div>
+    </body>
+</html> <!-- #EndEditable --> </div>
 	<div id="footer"> Copyright &copy; 2010 | CSE 870 iMedLife Design Group - <a href="http://www.msu.edu" target="_blank">Mighigan State University</a></div>
 </body>
 
