@@ -52,7 +52,14 @@
 					<option value="edit"> Edit Medical Record </option>
 					<option value="view"> View Medical Record </option>
 				</select>
+                
 				<input type="submit" value="Go"/>
+                <br/>
+                <input type="submit" value="Medical Record"/>
+                <input type="submit" value="Medical History"/>
+                <input type="submit" value="Healthcare Providers"/>
+                <input type="submit" value="Insurance Company Information"/>
+                
 			</form>
 			
 		<?php
