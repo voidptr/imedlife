@@ -34,7 +34,7 @@ if(isset($_GET['sessionID']) && isset($_GET['uploadID'])) {
 		header("Content-Type:$type");//Responds with the image
 		echo $file;
 		
-		if(!result)
+		if(!$result)
 			echo "<error1>No match in database</error1>";
 		echo "</response>";
 	}//End if logged in

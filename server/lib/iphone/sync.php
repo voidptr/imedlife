@@ -46,7 +46,7 @@ if(isset($_GET['sessionID'])) {
 				}
 				$rowNum++;
 			}
-			if(!result)
+			if(!$result)
 				echo "<error>No match in database</error>";
 		echo "</response>";
 	}//End check for loggedIn
