@@ -34,9 +34,11 @@ function viewRecords($tableName) {//Displays the patient's information from the 
 				echo "ERROR: Couldn't find result for patient using patientID=$patientID";
 								    	
 		        echo "</tr></table>"; //Close the table
-                echo "<input type=\"submit\" value=\"Submit\"/>";
-                echo "</form>"; //Close the form
-            
+                echo "</form>";//Close the form ?> 
+
+                <input name="ApplyChanges" type="submit" value="Submit" />
+
+          <?php  
             
                 mysql_free_result($result); //release the resource
 		}
