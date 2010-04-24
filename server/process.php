@@ -25,8 +25,11 @@ if (isset($_GET['request'])) { //If we get a GET requestType, we know it's from 
 		case "retrieveHealthcare":
 			include("lib/iphone/display_healthcare.php");
 			break;
-		case "retrieveUploaded":
-			include("lib/iphone/display_uploaded.php");
+		case "retrieveUploadInfo":
+			include("lib/iphone/display_uploaded_info.php");
+			break;
+		case "retrieveUploadContent":
+			include("lib/iphone/display_uploaded_content.php");
 			break;
 		case "approveDoc":
 			include("lib/iphone/approve.php");
@@ -37,7 +40,10 @@ if (isset($_GET['request'])) { //If we get a GET requestType, we know it's from 
 		case "uploadInfo":
 			include("lib/iphone/upload.php");
 			break;
-		case "sync":
+		case "addCustomField":
+			include("lib/iphone/custom_field.php");
+			break;
+		case "retrieveSync":
 			include("lib/iphone/sync.php"); 
 			break;
 	}

@@ -12,7 +12,7 @@ function upload(){
 	if(is_uploaded_file($_FILES['userFile']['tmp_name'][0])) { 	    //make sure we actually got a file
 	    $maxSize = $_POST['MAX_FILE_SIZE'];
 	    if($_FILES['userFile']['size'][0] < $maxSize) { //Make sure the filesize < maximum file size
-			$patientID = $_SESSION['sessionID']; //Get the patientID
+			$patientID = $_SESSION['patientID']; //Get the patientID
 			$size = getimagesize($_FILES['userFile']['tmp_name'][0]);
 			$uploadType = $size['mime'];
 			
