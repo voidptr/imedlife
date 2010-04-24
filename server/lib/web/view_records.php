@@ -33,6 +33,22 @@ function viewRecords($tableName) {//Displays the patient's information from the 
 	}   
 }//End viewRecords function
 
+//If MedicalRecord Pressed then view the corresponding table 
 if(isset($_POST['MedicalRecord']))
 	viewRecords("medicalRecords");                            
+
+//If MedicalHistory Pressed then view the corresponding table
+if(isset($_POST['MedicalHistory']))
+	viewRecords("medicalhistories");                            
+
+//If HealthcareProviders Pressed then view the corresponding table
+if(isset($_POST['HealthcareProviders']))
+	viewRecords("healthcareproviders");                            
+
+//If InsuranceCompanyInformation Pressed then view the corresponding table
+if(isset($_POST['InsuranceCompanyInformation']))
+	viewRecords("insuranceinfo");                            
+
+
+
 ?>
