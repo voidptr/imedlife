@@ -46,6 +46,10 @@ if (isset($_GET['request'])) { //If we get a GET requestType, we know it's from 
 		case "retrieveSync":
 			include("lib/iphone/sync.php"); 
 			break;
+		case "syncComplete":
+			include("lib/iphone/sync_done.php"); 
+			break;
+			
 	}
 }
 

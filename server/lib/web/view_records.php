@@ -2,7 +2,7 @@
 function viewRecords($tableName) {//Displays the patient's information from the desired table in a table form.									
 	$result = mysql_query("SHOW COLUMNS FROM $tableName"); //get all the fields from the medicalRecords table
 	if($result) {
-		if (mysql_num_rows($result) > 0) {
+		if (mysql_num_rows($result) > 0) {		
 			echo "<div class=\"viewtable\">";
 			echo "<h3> View $tableName </h3>"; //Display which option has been chosen
 			echo "<table border=1 cellspacing=0 cellpadding=2>";

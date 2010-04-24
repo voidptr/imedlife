@@ -1,36 +1,42 @@
 <?php
-$tableRecID = ""; //We're going to find the specific
+$tableRecID = ""; //We're going to find the specific record that is being modified.
+
 function restricted($restrictedFields, $field) { //Determines whether or not the given field is restricted
 	$result = true;
-	if (count($restrictedFields) === 0) return ($false); //Make sure we don't get an empty set of restricted fields.
+	if (count($restrictedFields) == 0) return ($false); //Make sure we don't get an empty set of restricted fields.
 	//Search throught the restricted fields to see if the field exists
 	for($i=0; $i<count($restrictedFields); $i++) {
-		if($restrictedFields[$i] == $field) {
-			if ($field != "patientID" && strstr($field, "ID")) {//Use this to get the record ID for recording changes
-				$tableRecID = $field;
-			}
+		if($restrictedFields[$i] == $field)
 			break; //When we find it, stop searching.
-		}
 		else if ($i == count($restrictedFields)-1 && $restrictedFields[$i] != $field)
 			$result = false; //If we've searched all the way through and haven't found the field, then it's not restricted
 	}
 	return ($result);
 }//End restricted function
 
+function getID($fields, $restrictedFields) { //Returns the record id (name) that is being modified
+	for ($i=0; $i<count($fields); $i++) {
+		if (restricted($restrictedFields, $fields[$i]) && $fields[$i] != "patientID" && $fields[$i] != "doctorID" && $fields[$i] != "uploadID")
+			return ($fields[$i]);
+	}
+}//End getID function
+
 function editRecords($tableName) {//Displays the patient's information from the desired table in a table form.	
 	//First build up the restricted fields (i.e. fields that are not allowed to be edited.
-	$restrictedFields = array();//empty array. We will put them all in here
 	$fieldNames = ""; //Need to store the field names to pass them when editing. So we don't have to hard-code Every table.
 	$fields = array(); //We also need the fields to use for later
-	
-	//Now put all the restricted fields into the array. This can be done manually.
+	//Put all the restricted fields into the array. This can be done manually.
 	//@TODO: LIST ALL THE RESTRICTED FIELDS HERE!!!!!
+	$restrictedFields = array();//empty array. We will put them all in here
+	
 	$restrictedFields[] = "patientID";
 	$restrictedFields[] = "medicalRecordID";
 	$restrictedFields[] = "medicalHistoryID";
 	$restrictedFields[] = "insuranceInfoID";
 	$restrictedFields[] = "doctorID";
+	$restrictedFields[] = "healthcareProviderID";
 									
+	
 	$result = mysql_query("SHOW COLUMNS FROM $tableName"); //get all the fields from the chosen table
 	if($result) {
 		if (mysql_num_rows($result) > 0) {
@@ -63,18 +69,11 @@ function editRecords($tableName) {//Displays the patient's information from the 
 					//Only make the field editable if it is not restricted
 					if(!restricted($restrictedFields, $fields[$i]))
 						echo "<td><input name=\"$fields[$i]\" value=\"$record[$i]\"/></td>";
-					else {
-						echo "<td><input disabled=\"disabled\" name=\"$fields[$i]\" value=\"$record[$i]\"/></td>"; //Don't allow user to edit if it's restricted
-						
-						//Now we need to set the tableRecID. So if it's restricted we know tableRecID has been set if we're not looking at patientID
-						//Get the actualID to send now.
-						if($fields[$i] == $tableRecID){ echo "FOUND:";
-							$tableRecID = $record[$i]; //Assign the actual value instead of the field name
-						} else echo "TABLERECID: " .$tableRecID;
-					
-	
-					}				
+					else
+						echo "<td><input disabled=\"disabled\" name=\"$fields[$i]\" value=\"$record[$i]\"/></td>"; //Don't allow user to edit if it's restricted								
 				}
+				$tableRecID = $record[getID($fields, $restrictedFields)];
+				
 				echo "</tr>";//End the data row					    	
 		        echo "</tr></table></div>"; //Close the table
 		        echo "<input type=\"hidden\" name=\"table\" value=\"$tableName\"/>"; //Name of the table to change
