@@ -95,8 +95,7 @@ body {
 	overflow: scroll;
 }
 #content form input {
-	margin: 5px;
-
+	margin: 5px;y
 }
 
 #content form h3 {
@@ -106,7 +105,7 @@ body {
 
 .options {
 	margin-top: 20px;
-	background-color: #000000;
+	/*background-color: #000000;*/
 }
 
 p.main {
