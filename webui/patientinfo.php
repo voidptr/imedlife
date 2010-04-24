@@ -71,6 +71,22 @@
 			
 			</form>
 			
+            
+            
+            <!-- Edit Options -->
+			<form class="options" method="post" action="<?php echo $_SERVER['PHP_SELF'];?>">
+                <?php //Show the buttons for viewing specific information
+                	if(isset($_POST['option']) && $_POST['option'] == "edit") { ?>
+                        <input type="submit" name="MedicalRecord" value="Medical Record"/>
+		                <input type="submit" name="MedicalHistory" value="Medical History"/>
+		                <input type="submit" name="HealthcareProviders" value="Healthcare Providers"/>
+		                <input type="submit" name="InsuranceCompanyInformation" value="Insurance Company Information"/>
+		                <input type="hidden" name="option" value="edit" />
+                <?php } ?>
+			
+			</form>
+            
+            
 		<?php
 			if (isset($_POST['option']) && $_POST['option'] == "create") { ?>
 				<form class="forms" method="post" action="../server/process.php">
@@ -122,6 +138,13 @@
 			if (isset($_POST['option']) && $_POST['option'] == "view") {
 				include("../server/lib/web/view_records.php");
 			}	
+            
+       //Wah Edit Section
+			if (isset($_POST['option']) && $_POST['option'] == "edit") {
+				include("../server/lib/web/edit_records.php");
+			}   
+
+
 		}?>
 											
 		<!-- #EndEditable --> </div>
