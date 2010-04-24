@@ -90,15 +90,28 @@ body {
 }
 .viewtable {
 	width: auto;
+	margin: auto;
 	background-color:#CFDBF3;
 	padding: 20px;
 	overflow: scroll;
+	text-align:center;
 }
 .viewtable th {
 	background-color: gray;
 }
+.viewtable input {
+	background-color: #CFDBF3;
+}
+.viewtable td {
+	padding: 0px;
+	margin:0px;
+}
+.viewtable table {
+	margin-left: auto;
+	margin-right: auto;
+}
 #content form input {
-	margin: 5px;y
+	margin: 5px;
 }
 
 #content form h3 {

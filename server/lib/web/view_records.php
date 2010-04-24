@@ -5,7 +5,7 @@ function viewRecords($tableName) {//Displays the patient's information from the 
 		if (mysql_num_rows($result) > 0) {
 			echo "<div class=\"viewtable\">";
 			echo "<h3> View $tableName </h3>"; //Display which option has been chosen
-			echo "<table border=1 cellspacing=0 cellpadding=5>";
+			echo "<table border=1 cellspacing=0 cellpadding=2>";
 			
 			while ($row = mysql_fetch_array($result)) { //read every field name from the table
 				echo "<th>$row[0]</th>"; //Display the row name as a header
@@ -39,15 +39,15 @@ if(isset($_POST['MedicalRecord']))
 
 //If MedicalHistory Pressed then view the corresponding table
 if(isset($_POST['MedicalHistory']))
-	viewRecords("medicalhistories");                            
+	viewRecords("medicalHistories");                            
 
 //If HealthcareProviders Pressed then view the corresponding table
 if(isset($_POST['HealthcareProviders']))
-	viewRecords("healthcareproviders");                            
+	viewRecords("healthcareProviders");                            
 
 //If InsuranceCompanyInformation Pressed then view the corresponding table
 if(isset($_POST['InsuranceCompanyInformation']))
-	viewRecords("insuranceinfo");                            
+	viewRecords("insuranceInfo");                            
 
 
 
