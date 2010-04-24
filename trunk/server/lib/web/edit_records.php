@@ -40,6 +40,14 @@ function viewRecords($tableName) {//Displays the patient's information from the 
 
           <?php  
             
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
                 mysql_free_result($result); //release the resource
 		}
 	}   
