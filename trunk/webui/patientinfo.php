@@ -47,24 +47,28 @@
 			echo "<img src=\"images/notice.png\" alt=\"!\"/></p>";
 		}
 		else { //if logged in show the information ?>
-			<form class="options" method="post" action="<?php echo $SERVER['PHP_SELF']; ?>">
+			<form class="options" method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
 				<select name="option">
 					<option value="create"> Create New Record </option>
 					<option value="edit"> Edit Medical Record </option>
-					<option value="view"> View Medical Record </option>
+					<option value="view"> View Records </option>
 				</select>
                 
 				<input type="submit" value="Go"/>
                 <br/>
+			</form>
+			
+			<!-- View Options -->
+			<form class="options" method="post" action="<?php echo $_SERVER['PHP_SELF'];?>">
                 <?php //Show the buttons for viewing specific information
                 	if(isset($_POST['option']) && $_POST['option'] == "view") { ?>
-		                
                         <input type="submit" name="MedicalRecord" value="Medical Record"/>
 		                <input type="submit" name="MedicalHistory" value="Medical History"/>
 		                <input type="submit" name="HealthcareProviders" value="Healthcare Providers"/>
 		                <input type="submit" name="InsuranceCompanyInformation" value="Insurance Company Information"/>
-		         <?php include("../server/lib/web/view_medical_records.php");} ?>
-                
+		                <input type="hidden" name="option" value="view" />
+                <?php } ?>
+			
 			</form>
 			
 		<?php
@@ -115,9 +119,9 @@
 			<?php } //END  Create Option
 			
 		//Wah View Section
-			//if (isset($_POST['option']) && $_POST['option'] == "view") {
-			//	include("../server/lib/web/view_medical_records.php");
-		//	}	
+			if (isset($_POST['option']) && $_POST['option'] == "view") {
+				include("../server/lib/web/view_medical_records.php");
+			}	
 		}?>
 											
 		<!-- #EndEditable --> </div>
