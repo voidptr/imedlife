@@ -14,11 +14,12 @@ function viewRecords($tableName) {//Displays the patient's information from the 
 			//Now Display the information for the specific patient
 			$patientID = $_SESSION['patientID'];
 			$query = "SELECT * FROM $tableName WHERE patientID='$patientID'";
-			$record = mysql_fetch_array(mysql_query($query)); //Run the query and retrieve the record.
-			
-			if($record) { //If we actually got a record from the query, print it out to the table.
+			$result = mysql_query($query); //Run the query and retrieve the record.
+
+			if($result) { //If we actually got a record from the query, print it out to the table.
+				$record = mysql_fetch_array($result);
 				echo "<tr>"; //Create a new row in which we'll store the info.
-				for($i = 0; $i < count($record); $i++) { //Print each field into the table
+				for($i = 0; $i < mysql_num_fields($result); $i++) { //Print each field into the table
 					echo "<td> $record[$i] </td>";
 				}
 				echo "</tr>";//End the row
