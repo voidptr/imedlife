@@ -70,9 +70,7 @@
                 <?php } ?>
 			
 			</form>
-			
-            
-            
+			 
             <!-- Edit Options -->
 			<form class="options" method="post" action="<?php echo $_SERVER['PHP_SELF'];?>">
                 <?php //Show the buttons for viewing specific information
@@ -143,8 +141,6 @@
 			if (isset($_POST['option']) && $_POST['option'] == "edit") {
 				include("../server/lib/web/edit_records.php");
 			}   
-
-
 		}?>
 											
 		<!-- #EndEditable --> </div>

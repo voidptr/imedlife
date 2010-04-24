@@ -13,9 +13,7 @@ if(isset($_SESSION['loggedIn']) && $_SESSION['loggedIn'] == true) {//proceed if 
 	$tableName = $_POST['table'];
 	
 	//Get the tableRecID to record in the recordChanges table
-	//@TODO: ACTUALLY MAKE THIS AVAILABLE FROM THE FORM!!!!!
 	$tableRecID = $_POST['tableRecID'];
-	echo "RECORD ID: : " .$tableRecID; //TESTING
 	
 	//Start building the query. We will finish building it in the loop
 	$query = "UPDATE $tableName SET "; //This is an update, not a regular insertion
@@ -31,9 +29,7 @@ if(isset($_SESSION['loggedIn']) && $_SESSION['loggedIn'] == true) {//proceed if 
 			$query .= ($i == count($fields)-1) ? $fields[$i] ."='" .$value."'" : $fields[$i] ."='" .$value ."', "; //Don't put comma at end when we reach the last field
 		}
 	}
-	$query .= " WHERE patientID='$patientID'"; //Finish the query
-	
-	echo "Testing the query: <br/>" . $query; //Testing
+	$query .= " WHERE patientID='$patientID'"; //Finish the building the query
 	
 	//Modify the record in the database
 	$success = mysql_query($query);
@@ -43,14 +39,11 @@ if(isset($_SESSION['loggedIn']) && $_SESSION['loggedIn'] == true) {//proceed if 
 		$query = "INSERT INTO recordChanges(patientID, tableChanged, tableRecID) VALUES('$patientID', '$tableName', '$tableRecID')";
 		$result = mysql_query($query);
 		
-		if($result) {
-			echo "RECORD CHANGED AND LOGGED!!";
-			//All done, redirect back to the edit page
+		if($result) {//All done, redirect back to the edit page
+			header("location:../webui/patientinfo.php");
 		}
 		else echo "DID NOT RECORD THE CHANGE!";
 	}
-	
-	
 }
 
 ?>
