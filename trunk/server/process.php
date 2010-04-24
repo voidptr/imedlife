@@ -61,6 +61,9 @@ else if (isset($_POST['request'])) {
 		case "upload":
 			include("lib/web/upload.php");
 			break;
+		case "edit":
+			include("lib/web/edit.php");
+			break;
 	}
 }
 ?>
