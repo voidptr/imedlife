@@ -109,21 +109,21 @@
 					<b>Emergency Number:</b> (ex. 8885553256 no dashes) <input type="text" name="emergencyNumber" />
 					<b>Emergency Address:</b> <input type="text" name="emergencyAddress" />
 					<br/>
-		<!-- Wah -->	
+			
 					<!-- Create Medical History-->
                     <h3> Medical Histories </h3>
 					<b>Medical Conditions:</b> <input type="text" name="medicalConditions" />
 					<b>Medications:</b> <input type="text" name="medications" /><br/>
 					<b>Procedures:</b> <input type="text" name="procedures" />
 					<b>Visit Date:</b> (yyyymmdd no slashes, dashes, or spaces) <input type="text" name="visitDate" /><br/>
-		<!-- Wah -->
+		
 					<!-- CREATE Healthcare Providers Info -->
                 	<h3> Healthcare Providers </h3>
 					<b>Name:</b> <input type="text" name="name" />
 					<b>Healthcare Phone Number:</b> (ex. 8885553256 no dashes)<input type="text" name="hthcarphoneNumber" /><br/>
 					<b>Referred By:</b> <input type="text" name="referredBy" />
 					<br/>
-        <!-- Wah -->            
+                    
                     <!-- CREATE Insurance Info -->
                 	<h3> Insurance Company Information </h3>
 					<b>Insurance Company:</b> <input type="text" name="insuranceCompany" />
@@ -134,12 +134,12 @@
 				</form>
 			<?php } //END  Create Option
 			
-		//Wah View Section
+		//View Section
 			if (isset($_POST['option']) && $_POST['option'] == "view") {
 				include("../server/lib/web/view_records.php");
 			}	
             
-       //Wah Edit Section
+       //Edit Section
 			if (isset($_POST['option']) && $_POST['option'] == "edit") {
 				include("../server/lib/web/edit_records.php");
 			}   
