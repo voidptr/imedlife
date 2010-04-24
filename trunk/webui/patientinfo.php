@@ -120,7 +120,7 @@
 			
 		//Wah View Section
 			if (isset($_POST['option']) && $_POST['option'] == "view") {
-				include("../server/lib/web/view_medical_records.php");
+				include("../server/lib/web/view_records.php");
 			}	
 		}?>
 											

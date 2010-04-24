@@ -94,6 +94,9 @@ body {
 	padding: 20px;
 	overflow: scroll;
 }
+.viewtable th {
+	background-color: gray;
+}
 #content form input {
 	margin: 5px;y
 }
