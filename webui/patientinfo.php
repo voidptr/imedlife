@@ -19,16 +19,20 @@
 		<p>
 			<a href="http://www.cse.msu.edu/~burksarm/imedlife/webui/main.php"><img id="logo" src="images/logo.png" alt="iMedLife"/></a></p>
 		<?php if (!isset($_SESSION['loggedIn']) || $_SESSION['loggedIn'] == false) { ?>
-		<form id="login" method="post" action="../server/lib/web/login.php">
+		<form id="login" method="post" action="../server/process.php">
 			Username: <input name="username" type="text"/>
 			Password: <input name="password" type="password"/>
+					  <input type="hidden" name="request" value="login" />
 					  <input name="login" type="submit" value="Login"/>
 					  
 		</form>
 		<a href="create.php"> Create Account </a>
 		<?php } 
-		else if (isset($_SESSION['loggedIn']))
-			echo "<a class=\"logout\" href=\"../server/lib/web/logout.php\"> Logout </a>";?>
+		else if (isset($_SESSION['loggedIn'])) {
+			echo "Logged in as: <h3>" .$_SESSION['firstName'] ." " .$_SESSION['lastName'] ." (" .$_SESSION['userType']. ")</h3>";
+			echo "<form method=\"post\" action=\"../server/process.php\">";
+			echo "<input type=\"submit\" name=\"request\" value=\"logout\"/>";
+		} ?>
 		
 	</div>
 	<div id="menu">
@@ -127,7 +131,7 @@
 					<b>Insurance Company:</b> <input type="text" name="insuranceCompany" />
 					<b>Policy Number:</b> <input type="text" name="policyNumber" /><br/>
                     
-        			<input type="hidden" name="request" value="create" /><br/>
+        			<input type="hidden" name="request0" value="create" /><br/>
 					<input type="submit" value="Create Record" />
 				</form>
 			<?php } //END  Create Option
