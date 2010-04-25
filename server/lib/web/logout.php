@@ -1,6 +1,6 @@
 <?php 
 //logout.php - Just destroys the user's session and logs the user out.
-include_once("../connect.php");
+include_once("lib/connect.php");
 session_start();
 
 if (isset($_SESSION['sessionID'])) {
@@ -9,13 +9,13 @@ if (isset($_SESSION['sessionID'])) {
 	
 	if($removed) { //Kill the session and go to homepage
 		session_destroy();
-		header("location: ../../../webui/main.php");
+		header("location: ../webui/main.php");
 	}
 	else echo "Error destroying session";
 }
 else { echo "SESSION ID IS NOT SET!";
 	session_destroy();
-	header("location: ../../../webui/main.php");
+	header("location: ../webui/main.php");
 }
 
 ?>
