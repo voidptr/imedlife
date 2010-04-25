@@ -51,8 +51,7 @@ if (isset($_GET['request'])) { //If we get a GET request, we know it's from the 
 			break;
 		case "syncComplete":
 			include("lib/iphone/sync_complete.php"); 
-			break;
-			
+			break;		
 	}
 }
 
@@ -61,7 +60,16 @@ else if (isset($_POST['request'])) {
 	//Now figure out what the web client is requesting
 	$request = $_POST['request'];
 	
-	switch ($request) {
+	switch ($request) {//Perform the following actions depending on which request we receive
+		case "createAccount": //Request to create a new webui account
+			include("lib/web/account_create.php");
+			break;	
+		case "login":
+			include("lib/web/login.php");
+			break;
+		case "logout":
+			include("lib/web/logout.php");
+			break;							
 		case "create": //Request to create a new medical record
 			include("lib/web/create_medical_records.php");
 			break;
@@ -71,6 +79,15 @@ else if (isset($_POST['request'])) {
 		case "edit":
 			include("lib/web/edit.php");
 			break;
+		case "view":
+			include("lib/web/view_records.php");
+			break;			
+		case "requestApproval":
+			include("lib/web/request_approval.php");
+			break;
+		case "approveDoc":
+			include("lib/web/approve_doc.php");
+			break;		
 	}
 }
 ?>

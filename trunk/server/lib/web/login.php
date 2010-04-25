@@ -28,6 +28,8 @@ if ($isPatient == false) {
 	if (crypt($password, $dbPassword) == $dbPassword) {//successful authentication of a doctor
 		$_SESSION['loggedIn'] = true;
 		$_SESSION['userType'] = "doctor";
+		$_SESSION['firstName'] = $row['firstName'];
+		$_SESSION['lastName'] = $row['lastName'];
 		
 		//Set the sessionID in the DB for the doctor
 		$query = "INSERT INTO sessions(username, sessionType) VALUES('$username', 'webui')"; //Insert their username and get their session ID
@@ -86,13 +88,20 @@ else { //We know the username exists and it must be a patient, so now authentica
 				//Get the patientID for use with accessing tables
 				$query = "SELECT patientID FROM patients WHERE username='$username'";
 				$res = mysql_query($query);
+				$row = mysql_fetch_array($res);
+
+				//Get the patient's name for displaying on the webui while they're logged in
+				$patientID = $row[0];
+				//echo $patientID;
+				$getName = "SELECT firstName, lastName FROM medicalRecords LEFT JOIN patients ON medicalRecords.patientID=patients.patientID WHERE patients.patientID='$patientID'";
+				$record = mysql_fetch_array(mysql_query($getName));
 				
-				if ($res) {
-					$row = mysql_fetch_array($res);
-					$_SESSION['patientID'] = $row[0]; //Now we have the patientID that we can use in our session
-					header("location: ../webui/patientinfo.php"); //Now redirect to the patient info page when successful
-				}
-				else echo "Couldn't get the patientID";
+				//Now set the session variables we want to store
+				$_SESSION['firstName'] = $record['firstName'];
+				$_SESSION['lastName'] = $record['lastName'];
+				$_SESSION['patientID'] = $patientID;
+					
+				header("location: ../webui/patientinfo.php"); //Now redirect to the patient info page when successful
 			}
 			else { //Couldn't retrieve the new session row
 				echo "Couldn't get sessionID";
