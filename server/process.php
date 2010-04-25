@@ -35,7 +35,7 @@ if (isset($_GET['request'])) { //If we get a GET request, we know it's from the 
 			include("lib/iphone/display_uploaded_content.php");
 			break;
 		case "approveDoc":
-			include("lib/iphone/approve.php");
+			include("lib/iphone/approve_doc.php");
 			break;
 		case "createAccount":
 			include("lib/iphone/account_create.php");
