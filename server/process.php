@@ -73,6 +73,9 @@ else if (isset($_POST['request'])) {
 		case "create": //Request to create a new medical record
 			include("lib/web/create_medical_records.php");
 			break;
+		case "createMedHist": //Request to create a new medical record
+			include("lib/web/create_medical_history.php");
+			break;	
 		case "upload":
 			include("lib/web/upload.php");
 			break;
@@ -81,7 +84,7 @@ else if (isset($_POST['request'])) {
 			break;
 		case "view":
 			include("lib/web/view_records.php");
-			break;			
+			break;						
 		case "requestApproval":
 			include("lib/web/request_approval.php");
 			break;

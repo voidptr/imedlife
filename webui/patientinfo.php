@@ -56,12 +56,11 @@
 				Choose an option: <select name="option">
 				<?php //Only allow the options specific to the user's role (patient or doctor)
 					if ($_SESSION['userType'] == "doctor") {//Options for the doctor
-						echo "<option value=\"create\"> Create New Record </option>";
-						echo "<option value=\"edit\"> Edit Medical Record </option>";
-						echo "<option value=\"view\"> View Records </option>";
+						echo "<option value=\"viewPatients\"> View Patients </option>";
 					}
 					else { //Options for the patient
-						echo "<option value=\"edit\"> Update Medical Record </option>";
+						echo "<option value=\"create\"> Create Basic Info </option>"; 
+						echo "<option value=\"edit\"> Edit Basic Info </option>";
 						echo "<option value=\"view\"> View Records </option>";					
 					}
 				?>
@@ -102,9 +101,13 @@
 				include("create_record.php");
 		} //END  Create Option
 			
-		//View Section
+		//View Records Section
 			if (isset($_POST['option']) && $_POST['option'] == "view") {
 				include("../server/lib/web/view_records.php");
+			}	
+		//View Patients Section
+			if (isset($_POST['option']) && $_POST['option'] == "viewPatients") {
+				include("../server/lib/web/view_patients.php");
 			}	
             
        //Edit Section
