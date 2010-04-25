@@ -83,6 +83,7 @@ body {
 
 .forms {
 	margin: 0px auto 10px auto;
+	height:auto;
 	padding: 10px;
 	text-align: left;
 	background-color: #CFDBF3;
@@ -186,4 +187,8 @@ p.notice img {
 p.uploadsuccess {
 	color: maroon;
 	font-weight: bolder;
+}
+.floater {
+	float:left;
+	width: 300px;
 }
