@@ -2,7 +2,7 @@
 //process.php - Serves as the interface that responds to requests for both the iPhone and the Web UI
 
 //See if we're getting requests from the iPhone (GET requests)
-if (isset($_GET['request'])) { //If we get a GET requestType, we know it's from the iPhone
+if (isset($_GET['request'])) { //If we get a GET request, we know it's from the iPhone
 	//Now figure out what the iPhone wants
 	$request = $_GET['request'];
 	
