@@ -97,7 +97,7 @@
 			</form>
             
             
-		<?php
+		<?php //CREATE Option
 			if (isset($_POST['option']) && $_POST['option'] == "create") {
 				include("create_record.php");
 		} //END  Create Option
