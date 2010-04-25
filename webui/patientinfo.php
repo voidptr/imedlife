@@ -32,6 +32,7 @@
 			echo "Logged in as: <h3>" .$_SESSION['firstName'] ." " .$_SESSION['lastName'] ." (" .$_SESSION['userType']. ")</h3>";
 			echo "<form method=\"post\" action=\"../server/process.php\">";
 			echo "<input type=\"submit\" name=\"request\" value=\"logout\"/>";
+			echo "</form>";
 		} ?>
 		
 	</div>
@@ -52,12 +53,19 @@
 		}
 		else { //if logged in show the information ?>
 			<form class="options" method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
-				<select name="option">
-					<option value="create"> Create New Record </option>
-					<option value="edit"> Edit Medical Record </option>
-					<option value="view"> View Records </option>
-				</select>
-                
+				Choose an option: <select name="option">
+				<?php //Only allow the options specific to the user's role (patient or doctor)
+					if ($_SESSION['userType'] == "doctor") {//Options for the doctor
+						echo "<option value=\"create\"> Create New Record </option>";
+						echo "<option value=\"edit\"> Edit Medical Record </option>";
+						echo "<option value=\"view\"> View Records </option>";
+					}
+					else { //Options for the patient
+						echo "<option value=\"edit\"> Update Medical Record </option>";
+						echo "<option value=\"view\"> View Records </option>";					
+					}
+				?>
+				</select>  
 				<input type="submit" value="Go"/>
                 <br/>
 			</form>
@@ -90,51 +98,9 @@
             
             
 		<?php
-			if (isset($_POST['option']) && $_POST['option'] == "create") { ?>
-				<form class="forms" method="post" action="../server/process.php">
-					<h3> Medical Records</h3>
-					<b>First Name:</b> <input type="text" name="firstName" />
-					<b>Middle Name:</b> <input type="text" name="middleName" />
-					<b>Last Name:</b> <input type="text" name="lastName" /><br/>
-					<b>Address:</b> <input type="text" name="address" />
-					<b>Phone Number:</b> (ex. 8885553256 no dashes)<input type="text" name="phoneNumber" /><br/>
-					<b>Date of Birth:</b> (yyyymmdd no slashes, dashes, or spaces)<input type="text" name="dateOfBirth" /><br/><br/>
-					<b>Sex:</b> (M or F) <input type="text" name="sex" />
-					<b>Hair Color:</b> <input type="text" name="hairColor" />
-					<b>Eye Color:</b> <input type="text" name="eyeColor" /><br/>
-					<b>Ethnicity:</b> <input type="text" name="ethnicity" />
-					<b>Height:</b> <input type="text" name="height" />
-					<b>Weight:</b> <input type="text" name="weight" /><br/>
-					<b>Blood Type:</b> <input type="text" name="bloodType" />
-					<b>Allergies:</b> <input type="text" name="allergies" />
-					<b>Emergency Name:</b> <input type="text" name="emergencyName" /><br/>
-					<b>Emergency Number:</b> (ex. 8885553256 no dashes) <input type="text" name="emergencyNumber" />
-					<b>Emergency Address:</b> <input type="text" name="emergencyAddress" />
-					<br/>
-			
-					<!-- Create Medical History-->
-                    <h3> Medical Histories </h3>
-					<b>Medical Conditions:</b> <input type="text" name="medicalConditions" />
-					<b>Medications:</b> <input type="text" name="medications" /><br/>
-					<b>Procedures:</b> <input type="text" name="procedures" />
-					<b>Visit Date:</b> (yyyymmdd no slashes, dashes, or spaces) <input type="text" name="visitDate" /><br/>
-		
-					<!-- CREATE Healthcare Providers Info -->
-                	<h3> Healthcare Providers </h3>
-					<b>Name:</b> <input type="text" name="name" />
-					<b>Healthcare Phone Number:</b> (ex. 8885553256 no dashes)<input type="text" name="hthcarphoneNumber" /><br/>
-					<b>Referred By:</b> <input type="text" name="referredBy" />
-					<br/>
-                    
-                    <!-- CREATE Insurance Info -->
-                	<h3> Insurance Company Information </h3>
-					<b>Insurance Company:</b> <input type="text" name="insuranceCompany" />
-					<b>Policy Number:</b> <input type="text" name="policyNumber" /><br/>
-                    
-        			<input type="hidden" name="request0" value="create" /><br/>
-					<input type="submit" value="Create Record" />
-				</form>
-			<?php } //END  Create Option
+			if (isset($_POST['option']) && $_POST['option'] == "create") {
+				include("create_record.php");
+		} //END  Create Option
 			
 		//View Section
 			if (isset($_POST['option']) && $_POST['option'] == "view") {

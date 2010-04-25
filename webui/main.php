@@ -31,6 +31,7 @@ session_start();
 			echo "Logged in as: <h3>" .$_SESSION['firstName'] ." " .$_SESSION['lastName'] ." (" .$_SESSION['userType']. ")</h3>";
 			echo "<form method=\"post\" action=\"../server/process.php\">";
 			echo "<input type=\"submit\" name=\"request\" value=\"logout\"/>";
+			echo "</form>";
 		} ?>
 		
 	</div>
