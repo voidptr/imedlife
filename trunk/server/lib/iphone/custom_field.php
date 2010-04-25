@@ -1,6 +1,5 @@
 <?php 
-//account_create.php - Creates a new patient account in the database from the iPhone
-//Assumes that the verification of valid fields such as password length and password confirm have already been done by the iPhone before sending the request.
+//custom_field.php - Creates a new custom field with the corresponding value that the patient requests from the iPhone
 
 include_once("lib/connect.php"); //establish the initial connection to the database. 
 								//(file is relative to process.php, since it's including this file)

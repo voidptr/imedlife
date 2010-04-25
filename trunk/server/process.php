@@ -16,6 +16,9 @@ if (isset($_GET['request'])) { //If we get a GET request, we know it's from the 
 		case "retrieveMedRec":
 			include("lib/iphone/display_medical_record.php");
 			break;
+		case "updateMedRec":
+			include("lib/iphone/update_medical_record.php");
+			break;	
 		case "retrieveMedHist":
 			include("lib/iphone/display_medical_history.php");
 			break;
