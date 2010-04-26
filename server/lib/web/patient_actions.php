@@ -20,12 +20,14 @@ function viewRecords($tableName, $patientID) {//Displays the patient's informati
 			$result = mysql_query($query); //Run the query and retrieve the record.
 
 			if($result) { //If we actually got a record from the query, print it out to the table.
-				$record = mysql_fetch_array($result);
-				echo "<tr>"; //Create a new row in which we'll store the info.
-				for($i = 0; $i < mysql_num_fields($result); $i++) { //Print each field into the table
-					echo "<td> $record[$i] </td>";
+				while ($record = mysql_fetch_array($result)) { //Get all records
+					echo "<tr>"; //Create a new row in which we'll store the info.
+					for($i = 0; $i < mysql_num_fields($result); $i++) { //Print each field into the table
+						echo "<td> $record[$i] </td>";
+					}
+					echo "</tr>";//End the row
 				}
-				echo "</tr>";//End the row
+				
 			}
 			else
 				echo "ERROR: Couldn't find result for patient using patientID=$patientID";
