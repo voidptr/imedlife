@@ -80,12 +80,26 @@ if($result) { //We were successful inserting the new row
 	$healthcareNumber = $_POST['healthcareNumber'];
 	$referredBy = "Dr. " .$_SESSION['firstName'] ." " .$_SESSION['middleName'] ." " .$_SESSION['lastName'];
 
-	$res = mysql_query("INSERT INTO healthcareProviders(patientID, doctorID, name, address, phoneNumber, referredBy) VALUES('$patientID', '$doctorID', '$healthcareName', '$healthcareAddress', '$healthcareNumber', '$referredBy')");
-	if ($res) { //If we're successful, redirect back to page
-		$_SESSION['option'] = "view";
-		header("location:../webui/patientinfo.php");
+	//First make sure this doctor is not already listed before we insert a duplicate
+	$check = mysql_query("SELECT * FROM healthcareProviders WHERE patientID='$patientID' AND doctorID='$doctorID'");
+	if ($check) { //Query executed successfully
+		$numRows = mysql_num_rows($check);
+		if($numRows == 0) {//The doctor isn't already listed, so go ahead and insert new record
+			$res = mysql_query("INSERT INTO healthcareProviders(patientID, doctorID, name, address, phoneNumber, referredBy) VALUES('$patientID', '$doctorID', '$healthcareName', '$healthcareAddress', '$healthcareNumber', '$referredBy')");
+			if ($res) { //If we're successful, redirect back to page
+				$_SESSION['option'] = "view";
+				header("location:../webui/patientinfo.php");
+			}
+			else { //Not successful, just redirect them
+				$_SESSION['option'] = "view";
+				header("location:../webui/patientinfo.php");
+			}
+		}
+		else { //The doctor is already listed. Nothing left to do but redirect.
+			$_SESSION['option'] = "view";
+			header("location:../webui/patientinfo.php");
+		}
 	}
-	else echo mysql_error();
 }
 else {
 	echo "Please use your browser's back button and ensure that you provided valid information.";
