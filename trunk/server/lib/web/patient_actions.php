@@ -1,6 +1,7 @@
 <?php 
 //view patients.php - Returns a list of all the patients in the database. The doctor can select which one he/she would like to work with
 include_once("../server/lib/connect.php");//path is relative to process.php
+session_start();
 
 function viewRecords($tableName, $patientID) {//Displays the patient's information from the desired table in a table form.									
 	$result = mysql_query("SHOW COLUMNS FROM $tableName"); //get all the fields from the table

@@ -1,6 +1,7 @@
 <?php
 //create_medical_history.php - Creates a new record in the medicalHistories table
 include_once("lib/connect.php");
+session_start();
 
 //Get all the MANY values from POST
 $patientID = $_POST['patientID'];
@@ -46,6 +47,9 @@ $pulseRhythm = $_POST['pulseRhythm'];
 $bloodPressureSystolic = $_POST['bloodPressureSystolic'];
 $bloodPressureDiastolic= $_POST['bloodPressureDiastolic'];
 
+
+//Now get the healthcare provider information
+
 //Create the query to execute
 $query = "INSERT INTO medicalHistories(patientID, visitDate, complains_headache, complains_chestPain, "
 		  ."complains_palpitations, complains_dyspneaWithExertion, complains_orthopnea, complains_PND, complains_peripheralEdema, "
@@ -69,11 +73,21 @@ $query = "INSERT INTO medicalHistories(patientID, visitDate, complains_headache,
 $result = mysql_query($query);
 
 if($result) { //We were successful inserting the new row
-	$_SESSION['option'] = "view";
-	header("location:../webui/patientinfo.php");
+	//Now just insert the healthcare provider information
+	$doctorID = $_SESSION['doctorID'];
+	$healthcareName = $_POST['healthcareName'];
+	$healthcareAddress = $_POST['healthcareAddress'];
+	$healthcareNumber = $_POST['healthcareNumber'];
+	$referredBy = $_SESSION['firstName'] ." " .$_SESSION['middleName'] ." " .$_SESSION['lastName'];
+
+	$res = mysql_query("INSERT INTO healthcareProviders(patientID, doctorID, name, address, phoneNumber, referredBy) VALUES('$patientID', '$doctorID', '$healthcareName', '$healthcareAddress', '$healthcareNumber', '$referredBy')");
+	if ($res) { //If we're successful, redirect back to page
+		$_SESSION['option'] = "view";
+		header("location:../webui/patientinfo.php");
+	}
+	else echo mysql_error();
 }
 else {
-	echo mysql_error();
 	echo "Please use your browser's back button and ensure that you provided valid information.";
 }
 
