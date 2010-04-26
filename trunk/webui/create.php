@@ -15,21 +15,6 @@
 		<p>
 			<a href="http://www.cse.msu.edu/~burksarm/imedlife/webui/main.php"><img id="logo" src="images/logo.png" alt="iMedLife"/></a></p>
 		<?php if (!isset($_SESSION['loggedIn']) || $_SESSION['loggedIn'] == false) { ?>
-		<form id="login" method="post" action="../server/process.php">
-			Username: <input name="username" type="text"/>
-			Password: <input name="password" type="password"/>
-					  <input type="hidden" name="request" value="login" />
-					  <input name="login" type="submit" value="Login"/>
-					  
-		</form>
-		<a href="create.php"> Create Account </a>
-		<?php } 
-		else if (isset($_SESSION['loggedIn'])) {
-			echo "Logged in as: <h3>" .$_SESSION['firstName'] ." " .$_SESSION['lastName'] ." (" .$_SESSION['userType']. ")</h3>";
-			echo "<form method=\"post\" action=\"../server/process.php\">";
-			echo "<input type=\"submit\" name=\"request\" value=\"logout\"/>";
-			echo "</form>";
-		} ?>
 		
 	</div>
 	<div id="menu">
