@@ -1,6 +1,6 @@
 <?php
 function viewRecords($tableName) {//Displays the patient's information from the desired table in a table form.									
-	$result = mysql_query("SHOW COLUMNS FROM $tableName"); //get all the fields from the medicalRecords table
+	$result = mysql_query("SHOW COLUMNS FROM $tableName"); //get all the fields from the table
 	if($result) {
 		if (mysql_num_rows($result) > 0) {		
 			echo "<div class=\"viewtable\">";
@@ -35,7 +35,7 @@ function viewRecords($tableName) {//Displays the patient's information from the 
 
 //If MedicalRecord Pressed then view the corresponding table 
 if(isset($_POST['MedicalRecord']))
-	viewRecords("medicalRecords");                            
+	viewRecords("patientBasic");                            
 
 //If MedicalHistory Pressed then view the corresponding table
 if(isset($_POST['MedicalHistory']))

@@ -94,7 +94,7 @@ function editRecords($tableName) {//Displays the patient's information from the 
 
 //If MedicalRecord Pressed then view the corresponding table 
 if(isset($_POST['MedicalRecord']))
-	editRecords("medicalRecords");                            
+	editRecords("patientBasicInfo");                            
 
 //If MedicalHistory Pressed then view the corresponding table
 if(isset($_POST['MedicalHistory']))

@@ -3,7 +3,7 @@
 include_once("../server/lib/connect.php");//path is relative to process.php
 
 function viewRecords($tableName, $patientID) {//Displays the patient's information from the desired table in a table form.									
-	$result = mysql_query("SHOW COLUMNS FROM $tableName"); //get all the fields from the medicalRecords table
+	$result = mysql_query("SHOW COLUMNS FROM $tableName"); //get all the fields from the table
 	if($result) {
 		if (mysql_num_rows($result) > 0) {		
 			echo "<div class=\"viewtable\">";
@@ -34,30 +34,86 @@ function viewRecords($tableName, $patientID) {//Displays the patient's informati
 		}
 	}   
 }//End viewRecords function
+function editBasic($tableName) {//Displays the patient's information from the desired table in a table form.	
+	//First build up the restricted fields (i.e. fields that are not allowed to be edited.
+	$fieldNames = ""; //Need to store the field names to pass them when editing. So we don't have to hard-code Every table.
+	$fields = array(); //We also need the fields to use for later
+	//Put all the restricted fields into the array. This can be done manually.
+	//@TODO: LIST ALL THE RESTRICTED FIELDS HERE!!!!!									
+	$result = mysql_query("SHOW COLUMNS FROM $tableName"); //get all the fields from the chosen table
+	if($result) {
+		if (mysql_num_rows($result) > 0) {
+			echo "<div class=\"viewtable\">";
+			echo "<h3> Edit $tableName </h3>"; //Display which option has been chosen
+			echo "<form method=\"post\" action=\"../server/process.php\"><table border=1 cellspacing=0 cellpadding=0><tr>";
+	
+			$first = true; //just used for building the fieldNames. So we can make it tab delimited
+			while ($row = mysql_fetch_array($result)) { //read every field name from the table
+				echo "<th>$row[0]</th>"; //Display the row name as a table column header
+				$fields[] = $row[0]; //Append the fields so we can use set their names in the form
+				if ($first == true) {
+					$first = false;
+					$fieldNames .= $row[0]; //Append the field name
+				}
+				else
+					$fieldNames .= "\t" .$row[0]; //Append the field name with a tab delimiter in front of it
+			}
+			
+			//Now Display the information for the specific patient
+			$patientID = $_SESSION['patientID'];
+			$query = "SELECT * FROM $tableName WHERE patientID='$patientID'";
+			$result = mysql_query($query); //Run the query and retrieve the record.
 
-//Form for showing all the actions the patient can choose from.
+			if($result) { //If we actually got a record from the query, print it out to the table.
+				$record = mysql_fetch_array($result);
+				echo "<tr>"; //Create a new row in which we'll store the info.
+				
+				for($i = 0; $i < mysql_num_fields($result); $i++) { //Print each field into the table						
+					//Only make the field editable if it is not restricted
+					if($fields[$i] != "patientID" && $fields[$i] != "insuranceInfoID")
+						echo "<td><input name=\"$fields[$i]\" value=\"$record[$i]\"/></td>";
+					else
+						echo "<td><input disabled=\"disabled\" name=\"$fields[$i]\" value=\"$record[$i]\"/></td>"; //Don't allow user to edit if it's restricted								
+				}
+				//Get the tableRecID to log to the recordChanges table
+				$tableRecID = $patientID;
+				
+				echo "</tr>";//End the data row					    	
+		        echo "</tr></table></div>"; //Close the table
+		        echo "<input type=\"hidden\" name=\"table\" value=\"$tableName\"/>"; //Name of the table to change
+		        echo "<input type=\"hidden\" name=\"tableRecID\" value=\"$tableRecID\"/>"; //ID in the table we're modifying
+		        echo "<input type=\"hidden\" name=\"fields\" value=\"$fieldNames\"/>"; //Send the field names to be modified
+		        echo "<input type=\"hidden\" name=\"request\" value=\"edit\"/>";
+		        echo "<input name=\"applyChanges\" type=\"submit\" value=\"Submit Changes\" />";
+	            echo "</form>";//Close the form
+	            mysql_free_result($result); //release the resource
+				
+			}
+			else
+				echo "ERROR: Couldn't find result for patient using patientID=$patientID";	
+		}
+	}   
+}//End editRecords
+
+
+//DISPLAY ALL THE OPTIONS
 echo "<form class=\"forms\" method=\"post\" action=\"" .$_SERVER['PHP_SELF'] ."\">";
 echo "<h3>Actions</h3>";
 echo "<br/><input type=\"submit\" name=\"viewPatientInfo\" value=\"View Patient Basic Info\"/>";
 echo "<input type=\"submit\" name=\"editPatientInfo\" value=\"Edit Patient Basic Info\"/>";	
 echo "<input type=\"submit\" name=\"approveDoc\" value=\"Approve Doctor Request\"/>";
 echo "<br/><input type=\"submit\" name=\"viewRecord\" value=\"View Medical Record\"/>";	
+echo "<input type=\"submit\" name=\"customField\" value=\"Add Custom Information\"/>";
 echo "<input type=\"submit\" name=\"editNote\" value=\"Edit Patient Note\"/>";
 echo "<input type=\"submit\" name=\"addNote\" value=\"New Patient Note\"/>";	
 echo "<input type=\"hidden\" name=\"option\" value=\"viewPatients\"/>";
 echo "</form>";
 
 //New Medical Record Option
-//Now if the doctor has selected a patient, then let them make a new medical history
+//Show the patient's entire medical record
 if (isset($_POST['viewRecord'])) {
-	$patientID = $_POST['patientID'];
-	viewRecords("patientBasicInfo", $patientID);
-} //End New Medical History Option 
-
-if (isset($_POST['viewPatientInfo'])) { //Option to View Patient Info
 	$patientID = $_SESSION['patientID'];
-		
-	//If doctor has been approved by patient, show the all patient's information in View Only mode
+	
 	viewRecords("patientBasicInfo", $patientID);
 	viewRecords("medicalHistories", $patientID);
 	viewRecords("healthcareProviders", $patientID);
@@ -65,17 +121,109 @@ if (isset($_POST['viewPatientInfo'])) { //Option to View Patient Info
 	viewRecords("notes", $patientID);
 	viewRecords("userInfoCustomFields", $patientID);
 
+	
+} //End New Medical History Option 
+
+//Option to View Basic Patient Info
+if (isset($_POST['viewPatientInfo'])) { 
+	$patientID = $_SESSION['patientID'];
+		
+	//First see if they have created any basic info
+	$basic = mysql_query("SELECT * FROM patientBasicInfo WHERE patientID='$patientID'");
+	if ($basic) {//Query was successful
+		if (mysql_num_rows($basic) > 0) {
+			//Display the Patient's information
+			viewRecords("patientBasicInfo", $patientID);
+			viewRecords("insuranceInfo", $patientID);
+
+		}
+		else { //User has not created any basic information yet so make them ?>
+			<form class="forms" method="post" action="../server/process.php">
+				<h3> New Patient Basic Info Record</h3><p> <b>Patient Name</b></p>
+				<b>First:</b> <input type="text" name="firstName" />
+				<b>Middle:</b> <input type="text" name="middleName" />
+				<b>Last:</b> <input type="text" name="lastName" /><br/>
+				<b>Address:</b> <input type="text" name="address" />
+				<b>Phone Number:</b> <input type="text" name="phoneNumber" /><br/>
+				<b>Date of Birth:</b> <input type="text" name="dateOfBirth" /><br/><br/>
+				<b>Sex:</b> (M or F) <input type="text" name="sex" />
+				<b>Hair Color:</b> <input type="text" name="hairColor" />
+				<b>Eye Color:</b> <input type="text" name="eyeColor" /><br/>
+				<b>Ethnicity:</b> <input type="text" name="ethnicity" />
+				<b>Height:</b> <input type="text" name="height" />
+				<b>Weight:</b> <input type="text" name="weight" /><br/>
+				<b>Blood Type:</b> <input type="text" name="bloodType" />
+				<b>Allergies:</b> <input type="text" name="allergies" />
+				<b>Emergency Name:</b> <input type="text" name="emergencyName" /><br/>
+				<b>Emergency Number:</b> <input type="text" name="emergencyNumber" />
+				<b>Emergency Address:</b> <input type="text" name="emergencyAddress" />
+				<br/>
+			    
+			    <!-- CREATE Insurance Info -->
+				<h3> Insurance Company Information </h3>
+				<b>Insurance Company:</b> <input type="text" name="insuranceCompany" />
+				<b>Policy Number:</b> <input type="text" name="policyNumber" /><br/>
+			    
+				<input type="hidden" name="request" value="create" /><br/>
+				<input type="submit" value="Create Record and Continue" />
+			</form>
+<?php			
+		}
+	}
+	
 }//End View Patient Info Option
 
-if (isset($_POST['editPatientInfo'])) { //Option to View Patient Info
-
-//Show the table with cells being the form inputs that the user can edit. Copy the code I have!!!!!
-
-//Make the query upon submit
+//Option to Edit Patient Info
+if (isset($_POST['editPatientInfo'])) {
+	$patientID = $_SESSION['patientID'];
+		
+	//First see if they have created any basic info
+	$basic = mysql_query("SELECT * FROM patientBasicInfo WHERE patientID='$patientID'");
+	if ($basic) {//Query was successful
+		if (mysql_num_rows($basic) > 0) {
+			//Display the Patient's Basic information to edit
+			editBasic("patientBasicInfo");
+			editBasic("insuranceInfo");
+		}
+		else { //User has not created any basic information yet so make them ?>
+			<form class="forms" method="post" action="../server/process.php">
+				<h3> New Patient Basic Info Record</h3><p> <b>Patient Name</b></p>
+				<b>First:</b> <input type="text" name="firstName" />
+				<b>Middle:</b> <input type="text" name="middleName" />
+				<b>Last:</b> <input type="text" name="lastName" /><br/>
+				<b>Address:</b> <input type="text" name="address" />
+				<b>Phone Number:</b> <input type="text" name="phoneNumber" /><br/>
+				<b>Date of Birth:</b> <input type="text" name="dateOfBirth" /><br/><br/>
+				<b>Sex:</b> (M or F) <input type="text" name="sex" />
+				<b>Hair Color:</b> <input type="text" name="hairColor" />
+				<b>Eye Color:</b> <input type="text" name="eyeColor" /><br/>
+				<b>Ethnicity:</b> <input type="text" name="ethnicity" />
+				<b>Height:</b> <input type="text" name="height" />
+				<b>Weight:</b> <input type="text" name="weight" /><br/>
+				<b>Blood Type:</b> <input type="text" name="bloodType" />
+				<b>Allergies:</b> <input type="text" name="allergies" />
+				<b>Emergency Name:</b> <input type="text" name="emergencyName" /><br/>
+				<b>Emergency Number:</b> <input type="text" name="emergencyNumber" />
+				<b>Emergency Address:</b> <input type="text" name="emergencyAddress" />
+				<br/>
+			    
+			    <!-- CREATE Insurance Info -->
+				<h3> Insurance Company Information </h3>
+				<b>Insurance Company:</b> <input type="text" name="insuranceCompany" />
+				<b>Policy Number:</b> <input type="text" name="policyNumber" /><br/>
+			    
+				<input type="hidden" name="request" value="create" /><br/>
+				<input type="submit" value="Create Record and Continue" />
+			</form>
+<?php			
+		}
+	}
+	
 
 }
 
-if (isset($_POST['approveDoc'])) { //Option to Approve doctor
+//Option to Approve doctor
+if (isset($_POST['approveDoc'])) {
 	$patientID = $_SESSION['patientID'];
 	//Show a (potential) list of doctors awaiting approval
 	$result = mysql_query("SELECT * FROM approvedDoctors WHERE patientID='$patientID' AND approved='0'");
