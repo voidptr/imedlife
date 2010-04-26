@@ -78,7 +78,7 @@ if($result) { //We were successful inserting the new row
 	$healthcareName = $_POST['healthcareName'];
 	$healthcareAddress = $_POST['healthcareAddress'];
 	$healthcareNumber = $_POST['healthcareNumber'];
-	$referredBy = $_SESSION['firstName'] ." " .$_SESSION['middleName'] ." " .$_SESSION['lastName'];
+	$referredBy = "Dr. " .$_SESSION['firstName'] ." " .$_SESSION['middleName'] ." " .$_SESSION['lastName'];
 
 	$res = mysql_query("INSERT INTO healthcareProviders(patientID, doctorID, name, address, phoneNumber, referredBy) VALUES('$patientID', '$doctorID', '$healthcareName', '$healthcareAddress', '$healthcareNumber', '$referredBy')");
 	if ($res) { //If we're successful, redirect back to page

@@ -19,12 +19,14 @@ function viewRecords($tableName, $patientID) {//Displays the patient's informati
 			$result = mysql_query($query); //Run the query and retrieve the record.
 
 			if($result) { //If we actually got a record from the query, print it out to the table.
-				$record = mysql_fetch_array($result);
-				echo "<tr>"; //Create a new row in which we'll store the info.
-				for($i = 0; $i < mysql_num_fields($result); $i++) { //Print each field into the table
-					echo "<td> $record[$i] </td>";
+				while ($record = mysql_fetch_array($result)) { //Get all records
+					echo "<tr>"; //Create a new row in which we'll store the info.
+					for($i = 0; $i < mysql_num_fields($result); $i++) { //Print each field into the table
+						echo "<td> $record[$i] </td>";
+					}
 				}
 				echo "</tr>";//End the row
+				
 			}
 			else
 				echo "ERROR: Couldn't find result for patient using patientID=$patientID";
@@ -45,7 +47,10 @@ if ($result) {//Display a listing of all the patients (names) for the doctor to 
 			."<select name=\"patientID\">";
 	
 	while ($row = mysql_fetch_array($result)) {//Get all the rows
-		echo "<option value=\"$row[0]\"> $row[1] $row[2] $row[3]</option>";
+		if (isset($_POST['patientID']) && $row[0] == $_POST['patientID']) //Keep the current patient selected unless doctor changes it.
+			echo "<option value=\"$row[0]\" selected=\"selected\"> $row[1] $row[2] $row[3]</option>";
+		else 
+			echo "<option value=\"$row[0]\"> $row[1] $row[2] $row[3]</option>";
 	}
 	echo "</select>";
 		echo "<div class=\"forms\">";
@@ -54,9 +59,7 @@ if ($result) {//Display a listing of all the patients (names) for the doctor to 
 		echo "<input type=\"submit\" name=\"requestApproval\" value=\"Request Patient Approval\"/>";
 		echo "<br/><input type=\"submit\" name=\"addHistory\" value=\"New Medical History Record\"/>";	
 		echo "<input type=\"submit\" name=\"addTest\" value=\"New Test Procedures Record\"/>";	
-		echo "<input type=\"hidden\" name=\"option\" value=\"viewPatients\"/>";
-			
-		
+		echo "<input type=\"hidden\" name=\"option\" value=\"viewPatients\"/>";	
   	echo "</div></form>";
 }
 else {
