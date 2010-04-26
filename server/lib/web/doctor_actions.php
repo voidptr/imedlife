@@ -1,7 +1,7 @@
 <?php 
 //view patients.php - Returns a list of all the patients in the database. The doctor can select which one he/she would like to work with
 include_once("../server/lib/connect.php");//path is relative to process.php
-
+session_start();
 function viewRecords($tableName, $patientID) {//Displays the patient's information from the desired table in a table form.									
 	$result = mysql_query("SHOW COLUMNS FROM $tableName"); //get all the fields from the patientBasicInfo table
 	if($result) {
@@ -111,6 +111,11 @@ if (isset($_POST['addHistory'])) {
 		Pulse Rhythm: <input type="text" name="pulseRhythm"/><br/>
 		Blood Pressure (Systolic): <input type="text" name="bloodPressureSystolic"/><br/>
 		Blood Pressure (Diastolic): <input type="text" name="bloodPressureDiastolic"/><br/>
+		
+		<h3>Healthcare Provider Information</h3>
+		Healthcare Facility Name: <input type="text" name="healthcareName"/><br/>
+		Address: <input type="text" name="healthcareAddress" /> <br/>
+		Healthcare Facility Phone Number: <input type="text" name="healthcareNumber"/>
 		
 		<input type="hidden" name="patientID" value="<?php echo $patientID; ?>"/>
 		<input type="hidden" name="request" value="createMedHist" />
