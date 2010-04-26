@@ -45,7 +45,7 @@
 	</div>
 	
 	<div id="content"> <!-- #BeginEditable "MainContent" -->
-		<h1> Patient Info </h1>
+		<h2> Patient Info </h2>
 		<?php 
 		if (!isset($_SESSION['loggedIn']) || $_SESSION['loggedIn'] != true) { //display message if not logged in
 			echo "<p class=\"notice\"> Please Login or Create Account above to access your medical records!";

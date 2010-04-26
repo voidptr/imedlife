@@ -137,7 +137,7 @@ if (isset($_POST['viewPatientInfo'])) { //Option to View Patient Info
 		}
 		else {//Doctor has not been approved
 			echo "<div class=\"forms\">";
-			echo "<p><b>Patient has not approved you to view this record. Please Request Approval.</b></p>";
+			echo "<p><b>Patient has not approved you to view this record. Please Request Approval or await pending request.</b></p>";
 			echo "</div>";
  		}
  	}
@@ -159,14 +159,18 @@ if (isset($_POST['requestApproval'])) { //Option to Request Patient Approal
 			
 					if($request) {//See if we were successful at inserting
 						//Now make a log in the recordChanges table so the patient's iPhone will see it.	
-						echo "<div class=\"forms\">";
-						echo "<p><b> Request for patient's approval was made. </b></p>";
-						echo "</div>";
-					}
-					else { //Couldn't insert the request.
-						echo "<div class=\"forms\">";
-						echo "<p><b> Could not make request at this time. </b></p>";
-						echo "</div>";		
+						$recordChange = mysql_query("INSERT INTO recordChanges(patientID, tableChanged, tableRecID) VALUES('$patientID', 'approvedDoctors', '$doctorID')");
+						if($recordChange) {
+							echo "<div class=\"forms\">";
+							echo "<p><b> Request for patient's approval was made. </b></p>";
+							echo "</div>";
+						}
+						else { //Couldn't insert the request.
+							echo "<div class=\"forms\">";
+							echo "<p><b> Could not make request at this time. </b></p>";
+							echo "</div>";		
+						}
+						
 					}
 				}
 				else { //There is already a pending request. Don't make a new one.
@@ -174,19 +178,26 @@ if (isset($_POST['requestApproval'])) { //Option to Request Patient Approal
 						echo "<p><b> There is already a pending request for this patient's approval. </b></p>";
 						echo "</div>";					
 				}
-			}
+			}//End Pending Check
+		}//End Doctor already approved
+		else {
+		echo "<div class=\"forms\">";
+		echo "<p><b> You have already been approved by this patient. Please select another action. </b></p>";
+		echo "</div>";
 		}
 	}
-	else {
-			echo "<div class=\"forms\">";
-			echo "<p><b> You have already been approved by this patient. Please select another action. </b></p>";
-			echo "</div>";
-	}
-
 }//End Request Approval Option
 
-if (isset($_POST['addTest'])) { //Option to Add Tests Procedures
-
+if (isset($_POST['addTest'])) { //Option to Add Tests Procedures?>
+	<form class="forms" enctype="multipart/form-data" action="../server/lib/web/upload.php" method="post">
+		<h3>New Test Procedures Record</h3>
+		Test Date: <input type="text" name="testDate" /><br/>
+		Comment:<br/><textarea name="comment" cols="50" rows="10">Enter Comment(s)...</textarea><br/>
+	    <input type="hidden" name="MAX_FILE_SIZE" value="8388608" />
+	    <b>XRay File (optional): </b><input name="userFile[]" type="file" />
+	    <input type="submit" value="Upload" />
+	</form>
+<?php
 }//End Add Tests Procedures Option
 
 echo "</div>";

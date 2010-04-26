@@ -47,7 +47,7 @@ else { //Go ahead since we got everything we needed
     }
     catch(Exception $e) { //Handle errors in the upload
         echo $e->getMessage();
-        echo 'Sorry, could not upload file';
+        echo "Sorry, could not upload file";
     }
 }
 ?>

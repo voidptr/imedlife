@@ -91,9 +91,6 @@ else if (isset($_POST['request'])) {
 		case "approveDoc":
 			include("lib/web/approve_doc.php");
 			break;
-		default:
-			echo "NOT A VALID REQUEST";
-			break;		
 	}
 }
 ?>
