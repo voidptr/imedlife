@@ -39,14 +39,14 @@ if (isset($_POST['addHistory'])) {
 	//Now build the (huge) form in HTML
 ?>
 
-	<form class="forms" method="post" action="../server/lib/process.php">
+	<form class="forms" method="post" action="../server/process.php">
 		<?php echo "<p><b><u> New Medical History Record for patient:</u></b> $firstName $middleName $lastName</p><br/>" ?>
 		Visit Date: <input type="text" name="visitDate"/>
 		<table border="1" cellspacing="0">
 		<th>Complains Of:</th> <th>Denies:</th>
 		<tr><td>Headache<input type="checkbox" name="complains_headache" value="1"/></td><td>Headache<input type="checkbox" name="denies_headache" value="1"/></td></tr>
 		<tr><td>Chest Pain <input type="checkbox" name="complains_chestPain" value="1"/></td><td>Chest Pain <input type="checkbox" name="denies_chestPain" value="1"/></td></tr>
-		<tr><td>Palpitations <input type="checkbox" name="complains_palpations" value="1"/></td><td>Palpitations <input type="checkbox" name="denies_palpations" value="1"/></td></tr>
+		<tr><td>Palpitations <input type="checkbox" name="complains_palpitations" value="1"/></td><td>Palpitations <input type="checkbox" name="denies_palpitations" value="1"/></td></tr>
 		<tr><td>Dyspnea with Exertion<input type="checkbox" name="complains_dyspneaWithExertion" value="1"/></td><td>Dyspnea with Exertion<input type="checkbox" name="denies_dyspneaWithExertion" value="1"/></td></tr>
 		<tr><td>Orthopnea<input type="checkbox" name="complains_orthopnea" value="1"/></td><td>Orthopnea<input type="checkbox" name="denies_orthopnea" value="1"/></td></tr>
 		<tr><td>PND <input type="checkbox" name="complains_PND" value="1"/></td><td>PND <input type="checkbox" name="denies_PND" value="1"/></td></tr>
@@ -54,7 +54,7 @@ if (isset($_POST['addHistory'])) {
 		<tr><td>Visual Symptoms <input type="checkbox" name="complains_visualSymptoms" value="1"/></td><td>Visual Symptoms <input type="checkbox" name="denies_visualSymptoms" value="1"/></td></tr>
 		<tr><td>Neurologic Problems <input type="checkbox" name="complains_neurologicProblems" value="1"/></td><td>Neurologic Problems <input type="checkbox" name="denies_neurologicProblems" value="1"/></td></tr>
 		<tr><td>Syncope <input type="checkbox" name="complains_syncope" value="1"/></td><td>Syncope <input type="checkbox" name="denies_syncope" value="1"/></td></tr>
-		<tr><td>Side Effects from Treatment <input type="checkbox" name="complains_sideEffectsFromTreatments" value="1"/></td><td>Side Effects from Treatment <input type="checkbox" name="denies_sideEffectsFromTreatments" value="1"/></td></tr>
+		<tr><td>Side Effects from Treatment <input type="checkbox" name="complains_sideEffectsFromTreatment" value="1"/></td><td>Side Effects from Treatment <input type="checkbox" name="denies_sideEffectsFromTreatment" value="1"/></td></tr>
 		</table>
 		<br/>
 		CHFE Education Provided To: <input type="text" name="CHFEducationProvidedTo"/><br/>
@@ -78,8 +78,21 @@ if (isset($_POST['addHistory'])) {
 		Blood Pressure (Systolic): <input type="text" name="bloodPressureSystolic"/><br/>
 		Blood Pressure (Diastolic): <input type="text" name="bloodPressureDiastolic"/><br/>
 		
+		<input type="hidden" name="patientID" value="<?php echo $patientID; ?>"/>
 		<input type="hidden" name="request" value="createMedHist" />
 		<input type="submit" value="Done"/>
 	</form>
 
-<?php } //End New Medical History Option ?>
+<?php } //End New Medical History Option 
+if (isset($_POST['viewPatientInfo'])) { //Option to View Patient Info
+
+}
+if (isset($_POST['RequestApproval'])) { //Option to Request Patient Approal
+
+}
+if (isset($_POST['addTest'])) { //Option to Add Tests Procedures
+
+}
+
+
+?>

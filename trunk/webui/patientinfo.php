@@ -51,28 +51,26 @@
 			echo "<p class=\"notice\"> Please Login or Create Account above to access your medical records!";
 			echo "<img src=\"images/notice.png\" alt=\"!\"/></p>";
 		}
-		else { //if logged in show the information ?>
+		else { //if logged in show the information 
+			if ($_SESSION['userType'] == "patient") {//Options for the patient?>
 			<form class="options" method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
 				Choose an option: <select name="option">
 				<?php //Only allow the options specific to the user's role (patient or doctor)
-					if ($_SESSION['userType'] == "doctor") {//Options for the doctor
-						echo "<option value=\"viewPatients\"> View Patients </option>";
-					}
-					else { //Options for the patient
 						echo "<option value=\"create\"> Create Basic Info </option>"; 
 						echo "<option value=\"edit\"> Edit Basic Info </option>";
 						echo "<option value=\"view\"> View Records </option>";					
-					}
 				?>
 				</select>  
 				<input type="submit" value="Go"/>
+				<?php }
+				else { $_POST['option'] = "viewPatients"; }?>
                 <br/>
 			</form>
 			
 			<!-- View Options -->
 			<form class="options" method="post" action="<?php echo $_SERVER['PHP_SELF'];?>">
                 <?php //Show the buttons for viewing specific information
-                	if(isset($_POST['option']) && $_POST['option'] == "view") { ?>
+                	if(isset($_POST['option']) && $_POST['option'] == "view") { $_SESSION['option'] = "view"; //Just so we can return back ?>
                         <input type="submit" name="MedicalRecord" value="Medical Record"/>
 		                <input type="submit" name="MedicalHistory" value="Medical History"/>
 		                <input type="submit" name="HealthcareProviders" value="Healthcare Providers"/>
@@ -85,7 +83,7 @@
             <!-- Edit Options -->
 			<form class="options" method="post" action="<?php echo $_SERVER['PHP_SELF'];?>">
                 <?php //Show the buttons for viewing specific information
-                	if(isset($_POST['option']) && $_POST['option'] == "edit") { ?>
+                	if(isset($_POST['option']) && $_POST['option'] == "edit") { $_SESSION['option'] = "edit"; ?>
                         <input type="submit" name="MedicalRecord" value="Medical Record"/>
 		                <input type="submit" name="MedicalHistory" value="Medical History"/>
 		                <input type="submit" name="HealthcareProviders" value="Healthcare Providers"/>
@@ -106,7 +104,7 @@
 				include("../server/lib/web/view_records.php");
 			}	
 		//View Patients Section
-			if (isset($_POST['option']) && $_POST['option'] == "viewPatients") {
+			if ((isset($_POST['option']) && $_POST['option'] == "viewPatients") || $_SESSION['option'] == "viewPatients") {
 				include("../server/lib/web/view_patients.php");
 			}	
             

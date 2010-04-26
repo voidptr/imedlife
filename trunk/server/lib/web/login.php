@@ -93,8 +93,9 @@ else { //We know the username exists and it must be a patient, so now authentica
 				//Get the patient's name for displaying on the webui while they're logged in
 				$patientID = $row[0];
 				//echo $patientID;
-				$getName = "SELECT firstName, lastName FROM medicalRecords LEFT JOIN patients ON medicalRecords.patientID=patients.patientID WHERE patients.patientID='$patientID'";
-				$record = mysql_fetch_array(mysql_query($getName));
+				$getName = "SELECT * FROM medicalRecords LEFT JOIN patients ON medicalRecords.patientID=patients.patientID WHERE patients.patientID='$patientID'";
+				$result = mysql_query($getName);
+				$record = mysql_fetch_array($result);
 				
 				//Now set the session variables we want to store
 				$_SESSION['firstName'] = $record['firstName'];
