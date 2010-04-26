@@ -67,7 +67,7 @@ else if (isset($_POST['createType']) && $_POST['createType'] == "doctor") {
 	$lastName = $_POST['lastName'];
 	
 	//Make sure we got all the fields
-	if (!isset($_POST['createType']) || !isset($_POST['username']) || !isset($_POST['password']) || !isset($_POST['passwordConfirm']) || !isset($_POST['firstName']) || !isset($_POST['middleName']) || !isset($_POST['lastName']) || !isset($_POST['patientID']))
+	if (!isset($_POST['createType']) || !isset($_POST['username']) || !isset($_POST['password']) || !isset($_POST['passwordConfirm']) || !isset($_POST['firstName']) || !isset($_POST['middleName']) || !isset($_POST['lastName']))
 		echo "Please use your browser's back button and  fill in all the fields.";
 		
 	//Make sure all the data entered is correct
