@@ -48,6 +48,7 @@ if ($result) {//Display a listing of all the patients (names) for the doctor to 
 		echo "<option value=\"$row[0]\"> $row[1] $row[2] $row[3]</option>";
 	}
 	echo "</select>";
+		echo "<div class=\"forms\">";
 		echo "<h3>Actions</h3>";
 		echo "<br/><input type=\"submit\" name=\"viewPatientInfo\" value=\"View Patient Info\"/>";	
 		echo "<input type=\"submit\" name=\"requestApproval\" value=\"Request Patient Approval\"/>";
@@ -56,7 +57,7 @@ if ($result) {//Display a listing of all the patients (names) for the doctor to 
 		echo "<input type=\"hidden\" name=\"option\" value=\"viewPatients\"/>";
 			
 		
-  	echo "</form>";
+  	echo "</div></form>";
 }
 else {
 echo "No patients found. Check back later.";

@@ -132,7 +132,7 @@ if (isset($_POST['viewPatientInfo'])) {
 	$basic = mysql_query("SELECT * FROM patientBasicInfo WHERE patientID='$patientID'");
 	if ($basic) {//Query was successful
 		if (mysql_num_rows($basic) > 0) {
-			//Display the Patient's information
+			//Display the Patient's information if they have already entered it
 			viewRecords("patientBasicInfo", $patientID);
 			viewRecords("insuranceInfo", $patientID);
 
@@ -277,6 +277,45 @@ if (isset($_POST['addNote'])) { //Option to Add Notes/Image and voice?>
 	</form>
 <?php
 }//End Add Tests Procedures Option
+
+//Option to add custom information
+if (isset($_POST['customField'])) {
+	echo "<div class=\"forms\">";
+	
+	//Show the user a form to add the field?>
+	<form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
+		Custom Field Name: <input type="text" name="fieldName" />
+		Value: <input type="text" name="fieldValue" />
+		<input type="hidden" name="customField" value="customField" />
+		<input type="submit" name="addCustom" value="Submit" />
+	</form>
+	<?php
+	echo "</div>";
+	
+	//Now add the custom field once the user has submitted it.
+	if(isset($_POST['addCustom'])) {
+		//Get info for insertinfg
+		$patientID = $_SESSION['patientID'];
+		$fieldName = $_POST['fieldName'];
+		$fieldValue = $_POST['fieldValue'];
+		
+		//Try to insert the new record
+		$result= mysql_query("INSERT INTO userInfoCustomFields(patientID, fieldName, value) VALUES('$patientID', '$fieldName', '$fieldValue')");
+		
+		//See if we were successful
+		if ($result) {
+			echo "<div class=\"forms\">";
+			echo "<p><b>Custom Information Added Successfully</b></p>";
+			echo "</div>";
+		}
+		else {
+			echo "<div class=\"forms\">";
+			echo "<p><b>Could not add custom information at this time. Please try again later.</b></p>";
+			echo "</div>";
+		
+		}
+	}
+}
 
 echo "</div>";
 ?>

@@ -63,25 +63,12 @@ else {
 	for ($i=0; $i<= count($error); $i++)
 		echo "<i>$error[$i] </i><br/>";
 	echo "<b>Please use your browser's back button and correct this problem.</b>";
-}//End display errors
-
-//Now insert the data into the healthcareProviders table            
-$query = "INSERT INTO healthcareproviders(patientID, doctorID, name, address, phoneNumber, referredBy)"
-		 ." VALUES ('$patientID', '$doctorID', '$facilityName', '$facilityAddress', '$phoneNumber', '$referredBy')";
-$result = mysql_query($query);
-
-if ($result) //redirect back to the patientinfo page if all is well
-	header("location: ../webui/patientinfo.php");
-else echo "ERROR, Could not create record in database.";
-//Validate Insurance Company Information data we got before we try to insert it into the database		        
-		$errors = ""; //will keep a collection the fields that have errors in them
-	
+}//End display errors	
                     
 		//TODO: REMOVE OR DISALLOW THE USE OF CHARACTERS THAT MUST BE ESCAPED, SUCH AS SINGLE QUOTES IN THE HEIGHT, ETC.
 		if ( strlen($errors) < 1) {			
-			//Now insert the data if it all looks correct
-			
-//PATIENT ID SHOULD BE GENERATED FROM THE MEDICAL RECORDS INSERT AND PROPOGATED INTO THE OTHER TABLES. IT SHOULDN'T BE ENTERED BY THE USER
+	
+			//Now insert the insurance information
 			$query = "INSERT INTO insuranceinfo(patientID, insuranceCompany, policyNumber) VALUES ('$patientID', '$insuranceCompany', '$policyNumber')";
 
 			$result = mysql_query($query);
