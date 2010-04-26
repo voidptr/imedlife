@@ -47,11 +47,14 @@ $pulseRhythm = $_POST['pulseRhythm'];
 $bloodPressureSystolic = $_POST['bloodPressureSystolic'];
 $bloodPressureDiastolic= $_POST['bloodPressureDiastolic'];
 
+//Put doctorID in a variable that's easier to use in the query
+$doctorID = $_SESSION['doctorID'];
+
 
 //Now get the healthcare provider information
 
 //Create the query to execute
-$query = "INSERT INTO medicalHistories(patientID, visitDate, complains_headache, complains_chestPain, "
+$query = "INSERT INTO medicalHistories(patientID, doctorID, visitDate, complains_headache, complains_chestPain, "
 		  ."complains_palpitations, complains_dyspneaWithExertion, complains_orthopnea, complains_PND, complains_peripheralEdema, "
 		  ."complains_visualSymptoms, complains_neurologicProblems, complains_syncope, complains_sideEffectsFromTreatment, "
 		  ."denies_headache, denies_chestPain, denies_palpitations, denies_dyspneaWithExertion, denies_orthopnea, denies_PND, "
@@ -60,7 +63,7 @@ $query = "INSERT INTO medicalHistories(patientID, visitDate, complains_headache,
 		  ."understandsMeds, compliantWithMeds, ableToDoADLs, CHFEdProgram, medicationSideEffects, currentWeight, lastWeight, "
 		  ."dryWeight, respirations, height, pulseRate, pulseRhythm, bloodPressureSystolic, bloodPressureDiastolic) "
 
-		  ."VALUES('$patientID', '$visitDate', '$complains_headache', '$complains_chestPain', "
+		  ."VALUES('$patientID', '$doctorID', '$visitDate', '$complains_headache', '$complains_chestPain', "
 		  ."'$complains_palpitations', '$complains_dyspneaWithExertion', '$complains_orthopnea', '$complains_PND', '$complains_peripheralEdema', "
 		  ."'$complains_visualSymptoms', '$complains_neurologicProblems', '$complains_syncope', '$complains_sideEffectsFromTreatment', "
 		  ."'$denies_headache', '$denies_chestPain', '$denies_palpitations', '$denies_dyspneaWithExertion', '$denies_orthopnea', '$denies_PND', "
@@ -74,7 +77,6 @@ $result = mysql_query($query);
 
 if($result) { //We were successful inserting the new row
 	//Now just insert the healthcare provider information
-	$doctorID = $_SESSION['doctorID'];
 	$healthcareName = $_POST['healthcareName'];
 	$healthcareAddress = $_POST['healthcareAddress'];
 	$healthcareNumber = $_POST['healthcareNumber'];
