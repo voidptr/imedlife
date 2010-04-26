@@ -1,10 +1,10 @@
 <?php
-echo "CREATE";
 //medical_records.php - Responds to a request to create a new medical record
 include_once("lib/connect.php"); //establish initial connection to database
+session_start();
 //Validate the ALL data we got before we try to insert it into the database
 
-//medicalRecords data
+//patientBasicInfo data
 $firstName = $_POST['firstName'];
 $middleName = $_POST['middleName'];
 $lastName = $_POST['lastName'];
@@ -34,7 +34,8 @@ $insuranceCompany = $_POST['insuranceCompany'];
 $policyNumber = $_POST['policyNumber'];
 
 //Get a hold of the doctorID to insert into certain tables
-$doctorID = $_SESSION['doctorID'];
+$patientID = $_SESSION['patientID'];
+echo $patientID;
 $errors = ""; //will keep a collection the fields that have errors in them
 
 //Check phone numbers format
@@ -46,15 +47,14 @@ if (strstr($height, "-")) {//Escape the quotes in the height if necessary
 	$height = addslashes($height);
 }			
 if ( strlen($errors) < 1) {//If there were no errors in the format of the entered data, proceed.			
-	//Now insert the data into medicalRecords
-	$query = "INSERT INTO medicalRecords(firstName, middleName, lastName, address, phoneNumber,"
+	//Now insert the data into patientBasicInfo
+	$query = "INSERT INTO patientBasicInfo(patientID, firstName, middleName, lastName, address, phoneNumber,"
 	 ." dateOfBirth, sex, hairColor, eyeColor, ethnicity, height, weight, bloodType, allergies,"
-	 ." emergencyName, emergencyNumber, emergencyAddress) VALUES ('$firstName', '$middleName',"
+	 ." emergencyName, emergencyNumber, emergencyAddress) VALUES ('$patientID', '$firstName', '$middleName',"
 	 ." '$lastName', '$address', '$phoneNumber', '$dateOfBirth', '$sex', '$hairColor',"
 	 ." '$eyeColor', '$ethnicity', '$height', '$weight', '$bloodType', '$allergies', '$emergencyName', '$emergencyNumber', '$emergencyAddress')";
 
-	$result = mysql_query($query);
-	if ($result)		
+	$result = mysql_query($query);		
 }//End no errors found
 //Display the errors the user has and force the user to fix them before continuing
 else { 

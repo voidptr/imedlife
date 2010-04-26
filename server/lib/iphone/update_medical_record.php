@@ -42,7 +42,7 @@ else { //We were provided with a sessionID
 				$patientID = $row[0];
 
 				//Now set the query up for building
-				$query = "UPDATE medicalRecords SET "; //This is an update query, not a regular insert
+				$query = "UPDATE patientBasicInfo SET "; //This is an update query, not a regular insert
 				//Now parse the list of changes so that we can build the query.
 				$changeList = explode(";", $changes); //Break up the string into an actual list (array)
 				

@@ -27,8 +27,8 @@ if (!isset($_GET['username']) || !isset($_GET['password']) || !isset($_GET['firs
 	echo "</response>";
 }	
 else {//If all the fields are entered, proceed	
-	//Now verify that this patient has a record in the medicalRecords table
-	$testQuery = "SELECT * FROM medicalRecords WHERE firstName='$firstName' AND middleName='$middleName' AND lastName='$lastName' AND patientID='$patientID'";
+	//Now verify that this patient has a record in the patientBasicInfo table
+	$testQuery = "SELECT * FROM patientBasicInfo WHERE firstName='$firstName' AND middleName='$middleName' AND lastName='$lastName' AND patientID='$patientID'";
 	$rows = mysql_num_rows(mysql_query($testQuery));
 
 	if ($rows != 1) {

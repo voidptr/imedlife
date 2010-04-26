@@ -25,9 +25,9 @@ if(isset($_GET['sessionID'])) {
 		$row = mysql_fetch_array(mysql_query($query));
 		$patientID = $row[0];
 		
-			$query = "SELECT * FROM medicalRecords WHERE patientID='$patientID'";
+			$query = "SELECT * FROM patientBasicInfo WHERE patientID='$patientID'";
 			$result = mysql_query($query); //Run the query
-			$columns = mysql_query("SHOW COLUMNS FROM medicalRecords");	
+			$columns = mysql_query("SHOW COLUMNS FROM patientBasicInfo");	
 			
 			$fields = array(); //store all the fields here so we can reuse them
 			while ($column = mysql_fetch_array($columns)) {//get all the field names without hard-coding them

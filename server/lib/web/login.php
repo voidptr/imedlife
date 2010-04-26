@@ -93,16 +93,21 @@ else { //We know the username exists and it must be a patient, so now authentica
 				//Get the patient's name for displaying on the webui while they're logged in
 				$patientID = $row[0];
 				//echo $patientID;
-				$getName = "SELECT * FROM medicalRecords LEFT JOIN patients ON medicalRecords.patientID=patients.patientID WHERE patients.patientID='$patientID'";
+				$getName = "SELECT * FROM patientBasicInfo LEFT JOIN patients ON patientBasicInfo.patientID=patients.patientID WHERE patients.patientID='$patientID'";
 				$result = mysql_query($getName);
-				$record = mysql_fetch_array($result);
-				
-				//Now set the session variables we want to store
-				$_SESSION['firstName'] = $record['firstName'];
-				$_SESSION['lastName'] = $record['lastName'];
-				$_SESSION['patientID'] = $patientID;
+				if($result) {
+					$record = mysql_fetch_array($result);
 					
-				header("location: ../webui/patientinfo.php"); //Now redirect to the patient info page when successful
+					//Now set the session variables we want to store
+					$_SESSION['firstName'] = $record['firstName'];
+					$_SESSION['lastName'] = $record['lastName'];
+					$_SESSION['patientID'] = $patientID;
+						
+					header("location: ../webui/patientinfo.php"); //Now redirect to the patient info page when successful
+				}
+				else {//Couldn't execute query successfully. Just send them back to main
+					header("location: ../webui/main.php"); //Now redirect to the patient info page when successful				
+				}
 			}
 			else { //Couldn't retrieve the new session row
 				echo "Couldn't get sessionID";

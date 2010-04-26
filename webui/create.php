@@ -36,7 +36,6 @@
 			First Name: <input type="text" name="firstName" />
 			Middle Name: <input type="text" name="middleName" />
 			Last Name :<input type="text" name="lastName" /><br/>
-			Patient Identification Number: <input type="text" name="patientID" /><br/>
 			<input type="hidden" name="request" value="createAccount"/>
 			<input type="submit" value="Create Account" />
 		</form>

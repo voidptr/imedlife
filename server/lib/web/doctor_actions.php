@@ -3,7 +3,7 @@
 include_once("../server/lib/connect.php");//path is relative to process.php
 
 function viewRecords($tableName, $patientID) {//Displays the patient's information from the desired table in a table form.									
-	$result = mysql_query("SHOW COLUMNS FROM $tableName"); //get all the fields from the medicalRecords table
+	$result = mysql_query("SHOW COLUMNS FROM $tableName"); //get all the fields from the patientBasicInfo table
 	if($result) {
 		if (mysql_num_rows($result) > 0) {		
 			echo "<div class=\"viewtable\">";
@@ -35,7 +35,7 @@ function viewRecords($tableName, $patientID) {//Displays the patient's informati
 	}   
 }//End viewRecords function
 
-//Set up the query
+//Show the list of patients to the doctor
 $query = "SELECT patientID, firstName, middleName, lastName FROM patientBasicInfo ORDER BY lastName ASC";
 $result = mysql_query($query);
 if ($result) {//Display a listing of all the patients (names) for the doctor to choose from
@@ -117,8 +117,8 @@ if (isset($_POST['addHistory'])) {
 	</form>
 
 <?php } //End New Medical History Option 
-
-if (isset($_POST['viewPatientInfo'])) { //Option to View Patient Info
+//Option to View Patient Info
+if (isset($_POST['viewPatientInfo'])) { 
 	$patientID = $_POST['patientID'];
 	$doctorID = $_SESSION['doctorID'];
 	
