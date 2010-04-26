@@ -76,6 +76,21 @@ $query = "INSERT INTO medicalHistories(patientID, doctorID, visitDate, complains
 $result = mysql_query($query);
 
 if($result) { //We were successful inserting the new row
+	//First we need to make a note of the change in the recordChanges table
+	//Find out the ID that just got inserted.
+	$max = mysql_query("SELECT MAX(medicalHistoriesID) FROM medicalHistories");
+	if ($max) {
+		if (mysql_num_rows($max) > 0) { //We got the result
+			//Now get the ID
+			$row = mysql_fetch_array($max);
+			$tableRecID = $row[0];
+			$table = "medicalHistories";
+			//Now insert the recordChange
+			$recordChange = mysql_query("INSERT INTO recordChanges(patientID, tableChanged, tableRecID) VALUES('$patientID', '$table', '$tableRecID')");
+			if(!$recordChange) echo mysql_error();
+		}
+	}
+
 	//Now just insert the healthcare provider information
 	$healthcareName = $_POST['healthcareName'];
 	$healthcareAddress = $_POST['healthcareAddress'];

@@ -14,14 +14,28 @@
 	<div id="banner">  
 		<p>
 			<a href="http://www.cse.msu.edu/~burksarm/imedlife/webui/main.php"><img id="logo" src="images/logo.png" alt="iMedLife"/></a></p>
+		<?php if (!isset($_SESSION['loggedIn']) || $_SESSION['loggedIn'] == false) { ?>
+		<form id="login" method="post" action="../server/process.php">
+			Username: <input name="username" type="text"/>
+			Password: <input name="password" type="password"/>
+					  <input type="hidden" name="request" value="login" />
+					  <input name="login" type="submit" value="Login"/>
+					  
+		</form>
+		<a href="create.php"> Create Account </a>
+		<?php } 
+		else if (isset($_SESSION['loggedIn'])) {
+			echo "Logged in as: <h3>" .$_SESSION['firstName'] ." " .$_SESSION['lastName'] ." (" .$_SESSION['userType']. ")</h3>";
+			echo "<form method=\"post\" action=\"../server/process.php\">";
+			echo "<input type=\"submit\" name=\"request\" value=\"logout\"/>";
+			echo "</form>";
+		} ?>
 		
 	</div>
 	<div id="menu">
 		<ul>
 			<li> <a href="main.php"> Main </a></li>
 			<li> <a href="patientinfo.php"> Patient Info </a></li>
-			<li> <a href="#"> Medical Info </a></li>
-			<li> <a href="#"> Help </a> </li>
 		</ul>
 	</div>
 	
@@ -30,13 +44,14 @@
 		<h3> Create a new Web Client Account</h3><br/>
 			<p> Account Type: <b>Patient</b> <input type="radio" name="createType" value="patient"/>
 			<b>Doctor</b> <input type="radio" name="createType" value="doctor"/></p>
-			Username: <input type="text" name="username"/><br/>
-			Password (at least 6 characters): <input type="password" name="password" />
+			Username: <input type="text" name="username0"/><br/>
+			Password (at least 6 characters): 
+			<input type="password" name="password0" />
 			Confirm Password: <input type="password" name="passwordConfirm"/><br/><br/>
 			First Name: <input type="text" name="firstName" />
 			Middle Name: <input type="text" name="middleName" />
 			Last Name :<input type="text" name="lastName" /><br/>
-			<input type="hidden" name="request" value="createAccount"/>
+			<input type="hidden" name="request0" value="createAccount"/>
 			<input type="submit" value="Create Account" />
 		</form>
 
