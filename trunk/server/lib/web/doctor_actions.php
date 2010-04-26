@@ -25,10 +25,10 @@ function viewRecords($tableName, $patientID) {//Displays the patient's informati
 					
 						//Show yes/no instead of 1/0 where appropriate
 						if ($tableName == "medicalHistories") {
-							if ($record[$i] == "0" && $i >1) //Don't format the IDs
-								echo "<td> No </td>";
-							else if ($record[$i] == "1" && $i>1)
-								echo "<td> Yes </td>";
+							if ($record[$i] == "0" && $i >2) //Don't format the IDs
+								echo "<td> <form><input type=\"checkbox\" disabled=\"disabled\"/></form> </td>";
+							else if ($record[$i] == "1" && $i>2)
+								echo "<td> <input type=\"checkbox\" checked=\"yes\" disabled=\"disabled\"/></form> </td>";
 							else echo "<td> $record[$i] </td>";
 						}
 						else echo "<td> $record[$i] </td>";
@@ -61,12 +61,15 @@ if ($result) {//Display a listing of all the patients (names) for the doctor to 
 		else 
 			echo "<option value=\"$row[0]\"> $row[1] $row[2] $row[3]</option>";
 	}
+	//Doctor's Options
 	echo "</select>";
 		echo "<div class=\"forms\">";
 		echo "<h3>Actions</h3>";
 		echo "<br/><input type=\"submit\" name=\"viewPatientInfo\" value=\"View Patient Info\"/>";	
 		echo "<input type=\"submit\" name=\"requestApproval\" value=\"Request Patient Approval\"/>";
-		echo "<br/><input type=\"submit\" name=\"addHistory\" value=\"New Medical History Record\"/>";	
+		echo "<br/><input type=\"submit\" name=\"addHistory\" value=\"New Medical History Record\"/>";
+		//TODO: ADD EDIT CAPABILITY echo "<input type=\"submit\" name=\"editHistory\" value=\"Edit Medical History Record\"/>";
+		//TODO: ADD DELETE CAPABILITY echo "<input type=\"submit\" name=\"deleteHistory\" value=\"Delete Medical History Record\"/>";	
 		echo "<input type=\"submit\" name=\"addTest\" value=\"New Test Procedures Record\"/>";	
 		echo "<input type=\"hidden\" name=\"option\" value=\"viewPatients\"/>";	
   	echo "</div></form>";
@@ -75,7 +78,7 @@ else {
 echo "No patients found. Check back later.";
 }
 
-//New Medical Record Option
+//New Medical History Option
 //Now if the doctor has selected a patient, then let them make a new medical history
 if (isset($_POST['addHistory'])) {
 	$patientID = $_POST['patientID'];
@@ -119,7 +122,7 @@ if (isset($_POST['addHistory'])) {
 		Dry Weight: <input type="text" name="dryWeight"/><br/>
 		Respirations: <input type="text" name="respirations"/><br/>
 		Height: <input type="text" name="height"/><br/>
-		Pulse Rate: <input type="text" name="pulseWeight"/><br/>
+		Pulse Rate: <input type="text" name="pulseRate"/><br/>
 		Pulse Rhythm: <input type="text" name="pulseRhythm"/><br/>
 		Blood Pressure (Systolic): <input type="text" name="bloodPressureSystolic"/><br/>
 		Blood Pressure (Diastolic): <input type="text" name="bloodPressureDiastolic"/><br/>
@@ -135,6 +138,100 @@ if (isset($_POST['addHistory'])) {
 	</form>
 
 <?php } //End New Medical History Option 
+
+//Option to edit Medical History
+/* TODO: ADD EDIT CAPABILITY
+if (isset($_POST['editHistory'])) { 
+	$patientID = $_POST['patientID'];
+	$doctorID = $_SESSION['doctorID'];
+	//Get all the records pertaining to that doctor
+	$result = mysql_query("SELECT * FROM medicalHistories WHERE patientID='$patientID' AND doctorID='$doctorID'");
+	
+	if ($result) {//Query executed successfully.
+		//Show the list of visitDates and patient names for the doctor to select from
+			$columns = mysql_query("SHOW COLUMNS FROM medicalHistories"); //get all the field names from the table
+			$fields = array(); //Create array to store fields in
+			if($columns) {
+				if (mysql_num_rows($result) > 0) {		
+					echo "<div class=\"viewtable\">";
+					echo "<form method=\"post\" action=\"".$_SERVER['PHP_SELF']."\">";
+					echo "<h3>Please select a medicalHistoriesID you wish to Edit.</h3><br/>";
+					echo "<table border=1 cellspacing=0 cellpadding=2>";
+				
+					while ($row = mysql_fetch_array($columns)) { //read every field name from the table
+						echo "<th>$row[0]</th>"; //Display the row name as a header
+						$fields[] = $row[0];
+					}
+	
+					while ($row = mysql_fetch_array($result)) {//Show the fields (all rows)
+			 			echo "<tr>";
+			 			for ($i=0; $i<mysql_num_fields($result); $i++) {
+							if ($row[$i] == "0" && $i >2) //Don't format the IDs
+								echo "<td><input type=\"checkbox\" disabled=\"disabled\" /></td>";
+							else if ($row[$i] == "1" && $i>2)
+								echo "<td><input type=\"checkbox\" disabled=\"disabled\" checked=\"yes\"/></td>";
+							else if ($i > 2)
+								echo "<td>$row[$i]</td>";
+							else if ($i==0)  {//Make the medicalHistoriesID clickable to select the record for editing
+								echo "<input type=\"hidden\" name=\"medicalHistoriesID-$i\" value=\"$row[$i]\"/>";
+								echo "<input type=\"hidden\" name=\"editHistory\" value=\"editHistory\"/>";
+								echo "<td><input type=\"submit\" value=\"$row[$i] Edit this Record\"/> </td>";
+							}
+							else
+								echo "<td>$row[$i]</td>";	
+			 			}
+			 			echo "</tr>";
+			 		}
+			 		echo "</form></table></div>"; //End the table for editing the results
+			 	}
+			}
+	}//End check for successful query execution
+	if (isset($_POST['medicalHistoriesID'])) {
+		$medicalHistoriesID = $_POST['medicalHistoriesID']; echo $medicalHistoriesID;
+		$result = mysql_query("SELECT * FROM medicalHistories WHERE medicalHistoriesID='$medicalHistoriesID'");
+		
+		
+		if ($result) {
+			$columns = mysql_query("SHOW COLUMNS FROM medicalHistories"); //get all the field names from the table
+			$fields = array(); //Create array to store fields in
+
+			if($columns) {
+				if (mysql_num_rows($result) > 0) {	
+					echo "<form method=\"post\" action=\"".$_SERVER['PHP_SELF']."\">";
+					echo "<div class=\"viewtable\">";
+					echo "<h3>Edit Patient History</h3><br/>";
+					echo "<table border=1 cellspacing=0 cellpadding=2>";
+				
+					while ($row = mysql_fetch_array($columns)) { //read every field name from the table
+						echo "<th>$row[0]</th>"; //Display the row name as a header
+						$fields[] = $row[0];
+					}
+		
+					while ($row = mysql_fetch_array($result)) {//Show the fields (all rows)
+			 			echo "<tr>";
+			 			for ($i=0; $i<mysql_num_fields($result); $i++) {
+							if ($row[$i] == "0" && $i >2) //Don't format the IDs
+								echo "<td><input type=\"checkbox\" /></td>";
+							else if ($row[$i] == "1" && $i>2)
+								echo "<td><input type=\"checkbox\" checked=\"yes\"/></td>";
+							else if ($i > 2)
+								echo "<td><input type=\"text\" name=\"fields[$i]\" value=\"$row[$i]\"/></td>";
+							else
+								echo "<td><input type=\"text\" name=$fields[$i] value=\"$row[$i]\" disabled=\"disabled\" /></td>";	
+			 			}
+			 			echo "</tr>";
+			 		}
+			 	}
+			 		echo "</form></table></div>";
+			 	    echo "<input type=\"submit\" name=\"makeEdit\" value=\"Submit Changes\"/>";
+			} 
+		}
+		else echo "Error Processing Request.";
+		
+	}
+}//End edit histories option*/
+
+
 //Option to View Patient Info
 if (isset($_POST['viewPatientInfo'])) { 
 	$patientID = $_POST['patientID'];
@@ -206,16 +303,39 @@ if (isset($_POST['requestApproval'])) { //Option to Request Patient Approal
 	}
 }//End Request Approval Option
 
-if (isset($_POST['addTest'])) { //Option to Add Tests Procedures?>
-	<form class="forms" enctype="multipart/form-data" action="../server/lib/web/upload.php" method="post">
+//Option to Add Tests Procedures
+if (isset($_POST['addTest'])) { 
+	$patientID = $_POST['patientID'];?>
+
+	<form class="forms" method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
 		<h3>New Test Procedures Record</h3>
 		Test Date: <input type="text" name="testDate" /><br/>
 		Comment:<br/><textarea name="comment" cols="50" rows="10">Enter Comment(s)...</textarea><br/>
-	    <input type="hidden" name="MAX_FILE_SIZE" value="8388608" />
-	    <b>XRay File (optional): </b><input name="userFile[]" type="file" />
-	    <input type="submit" value="Upload" />
+		<input type="hidden" name="patientID" value="<?php echo $patientID; ?>"/>
+		<input type="hidden" name="addTest" value="addTest"/>
+	    <input type="submit" name="test" value="Submit" />
 	</form>
-<?php
+	
+<?php	//Now process the test once the doctor submits
+	if(isset($_POST['test'])) {
+		//Insert the new test information
+		$patientID = $_POST['patientID'];
+		$testDate = $_POST['testDate'];
+		$comment = $_POST['comment'];
+		if (strstr($comment, "'") || strstr($comment, "\"")) $comment = addslashes($comment); //Escape quotes if necessary so we don't have problems with the query.
+		
+		$query = mysql_query("INSERT INTO tests(patientID, testDate, comment) VALUES('$patientID', '$testDate', '$comment')");
+		
+		if($query) {
+			$numRows = mysql_affected_rows();
+		
+			if($numRows > 0)
+				echo "<p><b>Test Added</b></p>";
+				//@TODO: RECORD CHANGES MADE HERE INTO THE recordChanges TABLE SO IPHONE CAN SYNC
+			else
+				echo "<p><b>Couldn't add test. Please Try again later.</b></p>";
+		}
+	}
 }//End Add Tests Procedures Option
 
 echo "</div>";

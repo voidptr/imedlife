@@ -26,9 +26,9 @@ function viewRecords($tableName, $patientID) {//Displays the patient's informati
 						//Show yes/no instead of 1/0 where appropriate
 						if ($tableName == "medicalHistories") {
 							if ($record[$i] == "0" && $i >1) //Don't format the IDs
-								echo "<td> No </td>";
+								echo "<td> <input type=\"checkbox\" disabled=\"disabled\"/></form> </td>";
 							else if ($record[$i] == "1" && $i>1)
-								echo "<td> Yes </td>";
+								echo "<td> <input type=\"checkbox\" checked=\"yes\" disabled=\"disabled\"/></form> </td>";
 							else echo "<td> $record[$i] </td>";
 						}
 						else echo "<td> $record[$i] </td>";
@@ -115,7 +115,7 @@ echo "<input type=\"submit\" name=\"editPatientInfo\" value=\"Edit Patient Basic
 echo "<input type=\"submit\" name=\"approveDoc\" value=\"Approve Doctor Request\"/>";
 echo "<br/><input type=\"submit\" name=\"viewRecord\" value=\"View Medical Record\"/>";	
 echo "<input type=\"submit\" name=\"customField\" value=\"Add Custom Information\"/>";
-echo "<input type=\"submit\" name=\"editNote\" value=\"Edit Patient Note\"/>";
+//FUTURE WORKecho "<input type=\"submit\" name=\"editNote\" value=\"Edit Patient Note\"/>";
 echo "<input type=\"submit\" name=\"addNote\" value=\"New Patient Note\"/>";	
 echo "<input type=\"hidden\" name=\"option\" value=\"viewPatients\"/>";
 echo "</form>";
@@ -229,8 +229,6 @@ if (isset($_POST['editPatientInfo'])) {
 <?php			
 		}
 	}
-	
-
 }
 
 //Option to Approve doctor
@@ -278,16 +276,37 @@ if (isset($_POST['approveDoc'])) {
 }//End Request Approval Option
 
 if (isset($_POST['addNote'])) { //Option to Add Notes/Image and voice?>
-	<form class="forms" enctype="multipart/form-data" action="../server/lib/web/upload.php" method="post">
+	<form class="forms" method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
 		<h3>Upload New Patient Note</h3>
-		Note Date: <input type="text" name="testDate" /><br/>
-		Note:<br/><textarea name="comment" cols="50" rows="10">Enter Comment(s)...</textarea><br/>
-	    <input type="hidden" name="MAX_FILE_SIZE" value="8388608" />
-	    <b>Image or Voice Recording (optional): </b><input name="userFile[]" type="file" />
+		Note Date: <input type="text" name="noteDate" /><br/>
+		Note:<br/><textarea name="noteText" cols="50" rows="10">Enter Comment(s)...</textarea><br/>
+	   <!-- FUTURE WORK <input type="hidden" name="MAX_FILE_SIZE" value="8388608" /> -->
+	   <!-- FUTURE WORK <b>Image or Voice Recording (optional): </b><input name="userFile[]" type="file" /> -->
+	   <input type="hidden" name="addNote" value="addNote"/>
+	   <input type="hidden" name="note" value="note"/>
 	    <input type="submit" value="Submit" />
 	</form>
-<?php
-}//End Add Tests Procedures Option
+<?php //Now process the test once the doctor submits
+	if(isset($_POST['note'])) {
+		//Insert the new test information
+		$patientID = $_SESSION['patientID'];
+		$noteDate = $_POST['noteDate'];
+		$noteText = $_POST['noteText'];
+		if (strstr($noteText, "'") || strstr($noteText, "\"")) $noteText = addslashes($noteText); //Escape quotes if necessary so we don't have problems with the query.
+		
+		$query = mysql_query("INSERT INTO notes(patientID, noteDate, noteText) VALUES('$patientID', '$noteDate', '$noteText')");
+		
+		if($query) {
+			$numRows = mysql_affected_rows();
+		
+			if($numRows > 0)
+				echo "<p><b>Note Added</b></p>";
+				//@TODO: RECORD CHANGES MADE HERE INTO THE recordChanges TABLE SO IPHONE CAN SYNC
+			else
+				echo "<p><b>Couldn't add note. Please Try again later.</b></p>";
+		}
+	}
+}//End Add Note Option
 
 //Option to add custom information
 if (isset($_POST['customField'])) {
@@ -323,10 +342,8 @@ if (isset($_POST['customField'])) {
 			echo "<div class=\"forms\">";
 			echo "<p><b>Could not add custom information at this time. Please try again later.</b></p>";
 			echo "</div>";
-		
 		}
 	}
 }
-
 echo "</div>";
 ?>
