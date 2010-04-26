@@ -1,0 +1,80 @@
+<?php
+//create_medical_history.php - Creates a new record in the medicalHistories table
+include_once("lib/connect.php");
+
+//Get all the MANY values from POST
+$patientID = $_POST['patientID'];
+$visitDate = $_POST['visitDate'];
+$complains_headache = $_POST['complains_headache'];
+$complains_chestPain = $_POST['complains_chestPain'];
+$complains_palpitations = $_POST['complains_palpitations'];
+$complains_dyspneaWithExertion = $_POST['complains_dyspneaWithExertion'];
+$complains_orthopnea = $_POST['complains_orthopnea'];
+$complains_PND = $_POST['complains_PND'];
+$complains_peripheralEdema = $_POST['complains_peripheralEdema'];
+$complains_visualSymptoms = $_POST['complains_visualSymptoms'];
+$complains_neurologicProblems = $_POST['complains_neurologicProblems'];
+$complains_syncope = $_POST['complains_syncope'];
+$complains_sideEffectsFromTreatment = $_POST['complains_sideEffectsFromTreatment'];
+$denies_headache = $_POST['denies_headache'];
+$denies_chestPain = $_POST['denies_chestPain'];
+$denies_palpitations = $_POST['denies_palpitations'];
+$denies_dyspneaWithExertion = $_POST['denies_dyspneaWithExertion'];
+$denies_orthopnea = $_POST['denies_orthopnea'];
+$denies_PND = $_POST['denies_PND'];
+$denies_peripheralEdema = $_POST['denies_peripheralEdema'];
+$denies_visualSymptoms = $_POST['denies_visualSymptoms'];
+$denies_neurologicProblems = $_POST['denies_neurologicProblems'];
+$denies_syncope = $_POST['denies_syncope'];
+$denies_sideEffectsFromTreatment = $_POST['denies_sideEffectsFromTreatment'];
+$CHFEducationProvidedTo = $_POST['CHFEducationProvidedTo'];
+$patientCheckingWeight = $_POST['patientCheckingWeight'];
+$understandsSodiumIssuesManagement = $_POST['understandsSodiumIssuesManagement'];
+$followingSodiumIssuesManagement = $_POST['followingSodiumIssuesManagement'];
+$understandsMeds = $_POST['understandsMeds'];
+$compliantWithMeds = $_POST['compliantWithMeds'];
+$ableToDoADLs = $_POST['ableToDoADLs'];
+$CHFEdProgram = $_POST['CHFEdProgram'];
+$medicationSideEffects = $_POST['medicationSideEffects'];
+$currentWeight = $_POST['currentWeight'];
+$lastWeight = $_POST['lastWeight'];
+$dryWeight = $_POST['dryWeight'];
+$respirations = $_POST['respirations'];
+$height = $_POST['height'];
+$pulseRate = $_POST['pulseRate'];
+$pulseRhythm = $_POST['pulseRhythm'];
+$bloodPressureSystolic = $_POST['bloodPressureSystolic'];
+$bloodPressureDiastolic= $_POST['bloodPressureDiastolic'];
+
+//Create the query to execute
+$query = "INSERT INTO medicalHistories(patientID, visitDate, complains_headache, complains_chestPain, "
+		  ."complains_palpitations, complains_dyspneaWithExertion, complains_orthopnea, complains_PND, complains_peripheralEdema, "
+		  ."complains_visualSymptoms, complains_neurologicProblems, complains_syncope, complains_sideEffectsFromTreatment, "
+		  ."denies_headache, denies_chestPain, denies_palpitations, denies_dyspneaWithExertion, denies_orthopnea, denies_PND, "
+		  ."denies_peripheralEdema, denies_visualSymptoms, denies_neurologicProblems, denies_syncope, denies_sideEffectsFromTreatment, "
+		  ."CHFEducationProvidedTo, patientCheckingWeight, understandsSodiumIssuesManagement, followingSodiumIssuesManagement, "
+		  ."understandsMeds, compliantWithMeds, ableToDoADLs, CHFEdProgram, medicationSideEffects, currentWeight, lastWeight, "
+		  ."dryWeight, respirations, height, pulseRate, pulseRhythm, bloodPressureSystolic, bloodPressureDiastolic) "
+
+		  ."VALUES('$patientID', '$visitDate', '$complains_headache', '$complains_chestPain', "
+		  ."'$complains_palpitations', '$complains_dyspneaWithExertion', '$complains_orthopnea', '$complains_PND', '$complains_peripheralEdema', "
+		  ."'$complains_visualSymptoms', '$complains_neurologicProblems', '$complains_syncope', '$complains_sideEffectsFromTreatment', "
+		  ."'$denies_headache', '$denies_chestPain', '$denies_palpitations', '$denies_dyspneaWithExertion', '$denies_orthopnea', '$denies_PND', "
+		  ."'$denies_peripheralEdema', '$denies_visualSymptoms', '$denies_neurologicProblems', '$denies_syncope', '$denies_sideEffectsFromTreatment', "
+		  ."'$CHFEducationProvidedTo', '$patientCheckingWeight', '$understandsSodiumIssuesManagement', '$followingSodiumIssuesManagement', "
+		  ."'$understandsMeds', '$compliantWithMeds', '$ableToDoADLs', '$CHFEdProgram', '$medicationSideEffects', '$currentWeight', '$lastWeight', "
+		  ."'$dryWeight', '$respirations', '$height', '$pulseRate', '$pulseRhythm', '$bloodPressureSystolic', '$bloodPressureDiastolic')";
+		  
+//Now run the darn thing
+$result = mysql_query($query);
+
+if($result) { //We were successful inserting the new row
+	$_SESSION['option'] = "view";
+	header("location:../webui/patientinfo.php");
+}
+else {
+	echo mysql_error();
+	echo "Please use your browser's back button and ensure that you provided valid information.";
+}
+
+?>

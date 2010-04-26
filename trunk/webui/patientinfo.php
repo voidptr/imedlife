@@ -40,7 +40,6 @@
 		<ul>
 			<li> <a href="main.php"> Main </a></li>
 			<li> <a href="patientinfo.php"> Patient Info </a></li>
-			<li> <a href="upload.php"> Upload Files </a></li>
 		</ul>
 	</div>
 	
@@ -52,68 +51,14 @@
 			echo "<img src=\"images/notice.png\" alt=\"!\"/></p>";
 		}
 		else { //if logged in show the information 
-			if ($_SESSION['userType'] == "patient") {//Options for the patient?>
-			<form class="options" method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
-				Choose an option: <select name="option">
-				<?php //Only allow the options specific to the user's role (patient or doctor)
-						echo "<option value=\"create\"> Create Basic Info </option>"; 
-						echo "<option value=\"edit\"> Edit Basic Info </option>";
-						echo "<option value=\"view\"> View Records </option>";					
-				?>
-				</select>  
-				<input type="submit" value="Go"/>
-				<?php }
-				else { $_POST['option'] = "viewPatients"; }?>
-                <br/>
-			</form>
-			
-			<!-- View Options -->
-			<form class="options" method="post" action="<?php echo $_SERVER['PHP_SELF'];?>">
-                <?php //Show the buttons for viewing specific information
-                	if(isset($_POST['option']) && $_POST['option'] == "view") { $_SESSION['option'] = "view"; //Just so we can return back ?>
-                        <input type="submit" name="MedicalRecord" value="Medical Record"/>
-		                <input type="submit" name="MedicalHistory" value="Medical History"/>
-		                <input type="submit" name="HealthcareProviders" value="Healthcare Providers"/>
-		                <input type="submit" name="InsuranceCompanyInformation" value="Insurance Company Information"/>
-		                <input type="hidden" name="option" value="view" />
-                <?php } ?>
-			
-			</form>
-			 
-            <!-- Edit Options -->
-			<form class="options" method="post" action="<?php echo $_SERVER['PHP_SELF'];?>">
-                <?php //Show the buttons for viewing specific information
-                	if(isset($_POST['option']) && $_POST['option'] == "edit") { $_SESSION['option'] = "edit"; ?>
-                        <input type="submit" name="MedicalRecord" value="Medical Record"/>
-		                <input type="submit" name="MedicalHistory" value="Medical History"/>
-		                <input type="submit" name="HealthcareProviders" value="Healthcare Providers"/>
-		                <input type="submit" name="InsuranceCompanyInformation" value="Insurance Company Information"/>
-		                <input type="hidden" name="option" value="edit" />
-                <?php } ?>
-			
-			</form>
-            
-            
-		<?php //CREATE Option
-			if (isset($_POST['option']) && $_POST['option'] == "create") {
-				include("create_record.php");
-		} //END  Create Option
-			
-		//View Records Section
-			if (isset($_POST['option']) && $_POST['option'] == "view") {
-				include("../server/lib/web/view_records.php");
-			}	
-		//View Patients Section
-			if ((isset($_POST['option']) && $_POST['option'] == "viewPatients") || $_SESSION['option'] == "viewPatients") {
-				include("../server/lib/web/view_patients.php");
-			}	
-            
-       //Edit Section
-			if (isset($_POST['option']) && $_POST['option'] == "edit") {
-				include("../server/lib/web/edit_records.php");
-			}   
-		}?>
-											
+			if ($_SESSION['userType'] == "patient") { //Only allow the options specific to the user's role (patient or doctor)
+				include("../server/lib/web/patient_actions.php"); //Patient has this main option
+			}
+			else { 
+				include("../server/lib/web/doctor_actions.php");  //Doctor only has this main option
+			}
+		}
+		?>							
 		<!-- #EndEditable --> </div>
 	<div id="footer"> Copyright &copy; 2010 | CSE 870 iMedLife Design Group - <a href="http://www.msu.edu" target="_blank">Mighigan State University</a></div>
 </body>

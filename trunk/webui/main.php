@@ -39,7 +39,6 @@ session_start();
 		<ul>
 			<li> <a href="main.php"> Main </a></li>
 			<li> <a href="patientinfo.php"> Patient Info </a></li>
-			<li> <a href="upload.php"> Upload Files </a></li>
 		</ul>
 	</div>
 	
