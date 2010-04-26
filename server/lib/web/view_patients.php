@@ -2,6 +2,39 @@
 //view patients.php - Returns a list of all the patients in the database. The doctor can select which one he/she would like to work with
 include_once("../server/lib/connect.php");//path is relative to process.php
 
+function viewRecords($tableName, $patientID) {//Displays the patient's information from the desired table in a table form.									
+	$result = mysql_query("SHOW COLUMNS FROM $tableName"); //get all the fields from the medicalRecords table
+	if($result) {
+		if (mysql_num_rows($result) > 0) {		
+			echo "<div class=\"viewtable\">";
+			echo "<h3>$tableName </h3>"; //Display which option has been chosen
+			echo "<table border=1 cellspacing=0 cellpadding=2>";
+			
+			while ($row = mysql_fetch_array($result)) { //read every field name from the table
+				echo "<th>$row[0]</th>"; //Display the row name as a header
+			}
+			
+			//Now Display the information for the specific patient
+			$query = "SELECT * FROM $tableName WHERE patientID='$patientID'";
+			$result = mysql_query($query); //Run the query and retrieve the record.
+
+			if($result) { //If we actually got a record from the query, print it out to the table.
+				$record = mysql_fetch_array($result);
+				echo "<tr>"; //Create a new row in which we'll store the info.
+				for($i = 0; $i < mysql_num_fields($result); $i++) { //Print each field into the table
+					echo "<td> $record[$i] </td>";
+				}
+				echo "</tr>";//End the row
+			}
+			else
+				echo "ERROR: Couldn't find result for patient using patientID=$patientID";
+								    	
+		    echo "</table></div>";
+		    mysql_free_result($result); //release the resource
+		}
+	}   
+}//End viewRecords function
+
 //Set up the query
 $query = "SELECT patientID, firstName, middleName, lastName FROM patientBasicInfo ORDER BY lastName ASC";
 $result = mysql_query($query);
@@ -23,7 +56,7 @@ if ($result) {//Display a listing of all the patients (names) for the doctor to 
 		echo "<input type=\"hidden\" name=\"option\" value=\"viewPatients\"/>";
 			
 		
-  	echo "</form></div>";
+  	echo "</form>";
 }
 else {
 echo "No patients found. Check back later.";
@@ -43,7 +76,7 @@ if (isset($_POST['addHistory'])) {
 		<?php echo "<p><b><u> New Medical History Record for patient:</u></b> $firstName $middleName $lastName</p><br/>" ?>
 		Visit Date: <input type="text" name="visitDate"/>
 		<table border="1" cellspacing="0">
-		<th>Complains Of:</th> <th>Denies:</th>
+		<th>Complains of:</th> <th>Denies:</th>
 		<tr><td>Headache<input type="checkbox" name="complains_headache" value="1"/></td><td>Headache<input type="checkbox" name="denies_headache" value="1"/></td></tr>
 		<tr><td>Chest Pain <input type="checkbox" name="complains_chestPain" value="1"/></td><td>Chest Pain <input type="checkbox" name="denies_chestPain" value="1"/></td></tr>
 		<tr><td>Palpitations <input type="checkbox" name="complains_palpitations" value="1"/></td><td>Palpitations <input type="checkbox" name="denies_palpitations" value="1"/></td></tr>
@@ -84,15 +117,77 @@ if (isset($_POST['addHistory'])) {
 	</form>
 
 <?php } //End New Medical History Option 
+
 if (isset($_POST['viewPatientInfo'])) { //Option to View Patient Info
+	$patientID = $_POST['patientID'];
+	$doctorID = $_SESSION['doctorID'];
+	
+	//First Find out whether or not the doctor has been approved by the patient
+	$approved = mysql_query("SELECT * FROM approvedDoctors WHERE patientID='$patientID' AND doctorID='$doctorID' AND approved='1'");
+	
+	if ($approved) {
+		if (mysql_num_rows($approved) > 0) {
+			//If doctor has been approved by patient, show the all patient's information in View Only mode
+			viewRecords("patientBasicInfo", $patientID);
+			viewRecords("medicalHistories", $patientID);
+			viewRecords("healthcareProviders", $patientID);
+			viewRecords("tests", $patientID);
+			viewRecords("notes", $patientID);
+			viewRecords("userInfoCustomFields", $patientID);
+		}
+		else {//Doctor has not been approved
+			echo "<div class=\"forms\">";
+			echo "<p><b>Patient has not approved you to view this record. Please Request Approval.</b></p>";
+			echo "</div>";
+ 		}
+ 	}
+ }//End View Patient Info Option
 
-}
-if (isset($_POST['RequestApproval'])) { //Option to Request Patient Approal
+if (isset($_POST['requestApproval'])) { //Option to Request Patient Approal
+	$patientID = $_POST['patientID'];
+	$doctorID = $_SESSION['doctorID'];
+	
+	//Make sure the doctor is not already approved
+	$approved = mysql_query("SELECT * FROM approvedDoctors WHERE patientID='$patientID' AND doctorID='$doctorID' AND approved='1'");
+	if ($approved) {
+		if(mysql_num_rows($approved) == 0) {//Doctor is not approved
+			//Now make sure there's not already a pending request
+			$pending = mysql_query("SELECT * FROM approvedDoctors WHERE patientID='$patientID' AND doctorID='$doctorID' AND approved='0'");
+			if ($pending) {
+				if(mysql_num_rows($pending) == 0) { //No pending requests. Go ahead and make one
+					$request = mysql_query("INSERT INTO approvedDoctors(patientID, doctorID, approved) VALUES ('$patientID', '$doctorID', '0')");
+			
+					if($request) {//See if we were successful at inserting
+						//Now make a log in the recordChanges table so the patient's iPhone will see it.	
+						echo "<div class=\"forms\">";
+						echo "<p><b> Request for patient's approval was made. </b></p>";
+						echo "</div>";
+					}
+					else { //Couldn't insert the request.
+						echo "<div class=\"forms\">";
+						echo "<p><b> Could not make request at this time. </b></p>";
+						echo "</div>";		
+					}
+				}
+				else { //There is already a pending request. Don't make a new one.
+						echo "<div class=\"forms\">";
+						echo "<p><b> There is already a pending request for this patient's approval. </b></p>";
+						echo "</div>";					
+				}
+			}
+		}
+	}
+	else {
+			echo "<div class=\"forms\">";
+			echo "<p><b> You have already been approved by this patient. Please select another action. </b></p>";
+			echo "</div>";
+	}
 
-}
+}//End Request Approval Option
+
 if (isset($_POST['addTest'])) { //Option to Add Tests Procedures
 
-}
+}//End Add Tests Procedures Option
 
-
+echo "</div>";
 ?>
