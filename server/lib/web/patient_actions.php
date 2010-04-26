@@ -23,7 +23,15 @@ function viewRecords($tableName, $patientID) {//Displays the patient's informati
 				while ($record = mysql_fetch_array($result)) { //Get all records
 					echo "<tr>"; //Create a new row in which we'll store the info.
 					for($i = 0; $i < mysql_num_fields($result); $i++) { //Print each field into the table
-						echo "<td> $record[$i] </td>";
+						//Show yes/no instead of 1/0 where appropriate
+						if ($tableName == "medicalHistories") {
+							if ($record[$i] == "0" && $i >1) //Don't format the IDs
+								echo "<td> No </td>";
+							else if ($record[$i] == "1" && $i>1)
+								echo "<td> Yes </td>";
+							else echo "<td> $record[$i] </td>";
+						}
+						else echo "<td> $record[$i] </td>";
 					}
 					echo "</tr>";//End the row
 				}
