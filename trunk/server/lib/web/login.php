@@ -102,6 +102,7 @@ else { //We know the username exists and it must be a patient, so now authentica
 					$_SESSION['firstName'] = $record['firstName'];
 					$_SESSION['lastName'] = $record['lastName'];
 					$_SESSION['patientID'] = $patientID;
+					$_POST['patientID'] = $patientID; //TESTING...
 						
 					header("location: ../webui/patientinfo.php"); //Now redirect to the patient info page when successful
 				}
