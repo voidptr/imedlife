@@ -34,7 +34,7 @@ $policyNumber = $_POST['policyNumber'];
 
 //Get a hold of the doctorID to insert into certain tables
 $patientID = $_SESSION['patientID'];
-echo $patientID;
+//echo $patientID;
 $errors = ""; //will keep a collection the fields that have errors in them
 
 //Check phone numbers format
