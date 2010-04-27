@@ -243,7 +243,7 @@ if (isset($_POST['viewPatientInfo'])) {
 	if ($approved) {
 		if (mysql_num_rows($approved) > 0) {
 			//If doctor has been approved by patient, show the all patient's information in View Only mode
-			viewRecords("patientBasicInfo", $patientID);
+			//viewRecords("patientBasicInfo", $patientID);
 			viewRecords("medicalHistories", $patientID);
 			viewRecords("healthcareProviders", $patientID);
 			viewRecords("tests", $patientID);

@@ -145,7 +145,7 @@ if (isset($_POST['viewPatientInfo'])) {
 		if (mysql_num_rows($basic) > 0) {
 			//Display the Patient's information if they have already entered it
 			viewRecords("patientBasicInfo", $patientID);
-			viewRecords("insuranceInfo", $patientID);
+			//viewRecords("insuranceInfo", $patientID);
 
 		}
 		else { //User has not created any basic information yet so make them ?>
@@ -169,12 +169,7 @@ if (isset($_POST['viewPatientInfo'])) {
 				<b>Emergency Number:</b> <input type="text" name="emergencyNumber" />
 				<b>Emergency Address:</b> <input type="text" name="emergencyAddress" />
 				<br/>
-			    
-			    <!-- CREATE Insurance Info -->
-				<h3> Insurance Company Information </h3>
-				<b>Insurance Company:</b> <input type="text" name="insuranceCompany" />
-				<b>Policy Number:</b> <input type="text" name="policyNumber" /><br/>
-			    
+			    			    
 				<input type="hidden" name="request" value="create" /><br/>
 				<input type="submit" value="Create Record and Continue" />
 			</form>
@@ -194,7 +189,7 @@ if (isset($_POST['editPatientInfo'])) {
 		if (mysql_num_rows($basic) > 0) {
 			//Display the Patient's Basic information to edit
 			editBasic("patientBasicInfo");
-			editBasic("insuranceInfo");
+		//	editBasic("insuranceInfo");
 		}
 		else { //User has not created any basic information yet so make them ?>
 			<form class="forms" method="post" action="../server/process.php">
@@ -217,12 +212,7 @@ if (isset($_POST['editPatientInfo'])) {
 				<b>Emergency Number:</b> <input type="text" name="emergencyNumber" />
 				<b>Emergency Address:</b> <input type="text" name="emergencyAddress" />
 				<br/>
-			    
-			    <!-- CREATE Insurance Info -->
-				<h3> Insurance Company Information </h3>
-				<b>Insurance Company:</b> <input type="text" name="insuranceCompany" />
-				<b>Policy Number:</b> <input type="text" name="policyNumber" /><br/>
-			    
+			    			    
 				<input type="hidden" name="request" value="create" /><br/>
 				<input type="submit" value="Create Record and Continue" />
 			</form>
