@@ -65,11 +65,11 @@ else {
 			//Now insert the insurance information
 			$query = "INSERT INTO insuranceinfo(patientID, insuranceCompany, policyNumber) VALUES ('$patientID', '$insuranceCompany', '$policyNumber')";
 
-			$result = mysql_query($query);
+			//$result = mysql_query($query);
 
-			if ($result) //redirect back to the patientinfo page if all is well
-				header("location: ../webui/patientinfo.php");
-			else echo "ERROR, Could not create record in database.";
+			//if ($result) //redirect back to the patientinfo page if all is well
+			//	header("location: ../webui/patientinfo.php");
+			//else echo "ERROR, Could not create record in database.";
 		}
 		//Display the errors the user has and force the user to fix them before continuing
 		else { 
