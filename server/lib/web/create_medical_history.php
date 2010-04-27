@@ -87,7 +87,6 @@ if($result) { //We were successful inserting the new row
 			$table = "medicalHistories";
 			//Now insert the recordChange
 			$recordChange = mysql_query("INSERT INTO recordChanges(patientID, tableChanged, tableRecID) VALUES('$patientID', '$table', '$tableRecID')");
-			if(!$recordChange) echo mysql_error();
 		}
 	}
 
@@ -119,7 +118,7 @@ if($result) { //We were successful inserting the new row
 	}
 }
 else {
-	echo "Please use your browser's back button and ensure that you provided valid information.";
+	echo "Please use your browser's back button and ensure that you provided valid information.";echo mysql_error();
 }
 
 ?>
