@@ -118,7 +118,7 @@ if($result) { //We were successful inserting the new row
 	}
 }
 else {
-	echo "Please use your browser's back button and ensure that you provided valid information.";echo mysql_error();
+	echo "Please use your browser's back button and ensure that you provided valid information.";
 }
 
 ?>
