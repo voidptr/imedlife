@@ -118,7 +118,7 @@ else { //We know the username exists and it must be a patient, so now authentica
 			echo "Couldn't get sessionID (couldn't start session)";
 		}	
 	}
-	//else //redirect to main page if patient login was unsuccessful. They will still see the notice to login.
-	//	header("location: ../webui/main.php");
+	else //redirect to main page if patient login was unsuccessful. They will still see the notice to login.
+		header("location: ../webui/main.php");
 }
 ?>
