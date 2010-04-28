@@ -10,7 +10,7 @@
 <body>
 	<div id="banner">  
 		<p>
-			<a href="http://www.cse.msu.edu/~burksarm/imedlife/webui/main.php"><img id="logo" src="images/logo.png" alt="iMedLife"/></a></p>		
+			<a href="http://www.cse.msu.edu/~cse870/Input/SS2010/iMedLife/Source/webui/main.php"><img id="logo" src="images/logo.png" alt="iMedLife"/></a></p>		
 	</div>
 	<div id="menu">
 		<ul>
