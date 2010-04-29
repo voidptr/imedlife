@@ -1,6 +1,6 @@
 <?php
 //display_medical_history.php - Renders the medical history information to the iPhone upon the request.
-						  //Expects to receive a sessionID from a valid login
+						  //Expects to receive a sessionID from a valid login and a recordID for the record the iPhone wants to retrieve
 include_once("lib/connect.php"); //Since this is included from process.php, files are relative to it, not this file
 
 header("Content-Type:text/xml"); //set the type to be xml
@@ -9,9 +9,10 @@ echo fgets($file); //output the xml version information, etc.
 fclose($file);
 
 //Get the sessionID, or error if we weren't supplied with one
-if(isset($_GET['sessionID'])) {
+if(isset($_GET['sessionID']) && isset($_GET['medicalHistoriesID'])) {
 	$sessionID = $_GET['sessionID'];
-
+	$medicalHistoriesID = $_GET['medicalHistoriesID'];
+	
 	//Check to see that the user is logged in
 	include_once("lib/iphone/check_login.php");
 	
@@ -25,7 +26,7 @@ if(isset($_GET['sessionID'])) {
 		$row = mysql_fetch_array(mysql_query($query));
 		$patientID = $row[0];
 		
-			$query = "SELECT * FROM medicalHistories WHERE patientID='$patientID'";
+			$query = "SELECT * FROM medicalHistories WHERE patientID='$patientID' AND medicalHistoriesID='$medicalHistoriesID'"; //Only show one row
 			$result = mysql_query($query); //Run the query
 			$columns = mysql_query("SHOW COLUMNS FROM medicalHistories");	
 			
@@ -52,7 +53,7 @@ if(isset($_GET['sessionID'])) {
 }//End check for sessionID
 else {//User is not logged in
 	echo "<response success=\"no\">";
-	echo "<error1>No SessionID</error1>";
+	echo "<error1>Didn't receive sessionID and medicalHistoriesID</error1>";
 	echo "</response>";
 }
 ?>
