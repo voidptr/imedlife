@@ -1,0 +1,1 @@
+This hosts the repository of the iMedLife application for the iPhone/iPod Touch developed for the CSE 870 Spring 2010 project at Michigan State University.
